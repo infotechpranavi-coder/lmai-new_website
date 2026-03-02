@@ -36,12 +36,12 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="lg:col-span-4 space-y-10">
             <Link href="/" className="group block">
-              <div className="relative w-40 h-32 transition-all duration-500">
+              <div className="relative w-40 h-32 transition-all duration-500 bg-white rounded-xl p-2">
                 <Image
                   src="/LMAI-Logo-1-removebg-preview.png"
                   alt="LMAI Logo"
                   fill
-                  className="object-contain"
+                  className="object-contain p-1"
                 />
               </div>
             </Link>

@@ -100,29 +100,31 @@ export default function Header() {
           "fixed inset-0 bg-white z-[100] xl:hidden flex flex-col p-8 transition-all duration-700 ease-in-out",
           isMobileMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         )}>
-          <div className="flex flex-col gap-6 mt-24">
+          <div className="flex flex-col gap-3 mt-24">
             {navItems.map((item, idx) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
-                  'text-3xl font-black uppercase tracking-tighter hover:text-primary transition-all',
-                  pathname === item.href ? 'text-primary italic translate-x-4' : 'text-foreground hover:translate-x-4'
+                  'relative text-xs font-black uppercase tracking-[0.15em] py-3 border-b border-border/30 hover:text-primary transition-all flex items-center justify-between group',
+                  pathname === item.href ? 'text-primary' : 'text-foreground/70'
                 )}
-                style={{ transitionDelay: `${idx * 50}ms` }}
+                style={{ transitionDelay: `${idx * 40}ms` }}
               >
-                {item.name}
+                <span>{item.name}</span>
+                {pathname === item.href && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                )}
               </Link>
             ))}
           </div>
 
           <div className="mt-auto pb-12 space-y-8">
-            <div className="w-full h-px bg-border" />
             <div className="flex flex-col gap-4">
               <p className="text-[10px] font-black uppercase tracking-widest text-foreground/40">Quick Action</p>
               <Link href="/membership" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="w-full h-16 rounded-2xl bg-primary text-white font-black uppercase tracking-widest text-sm hover:bg-black transition-all">
+                <button className="w-full h-12 rounded-2xl bg-primary text-white font-black uppercase tracking-widest text-xs hover:bg-black transition-all">
                   Become A Member
                 </button>
               </Link>

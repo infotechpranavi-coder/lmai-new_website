@@ -132,7 +132,7 @@ export default function Contact() {
                   </div>
                   <p className="text-sm font-bold text-foreground/60 leading-relaxed uppercase tracking-widest">
                     +91 8097333995<br />
-                    Mon - Sat: 10:00 - 18:00
+                    Mon - Sat: 10:00 - 6:00
                   </p>
                 </div>
 
