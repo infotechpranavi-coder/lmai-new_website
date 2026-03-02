@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import HeroCarousel from '@/components/HeroCarousel';
@@ -22,37 +19,30 @@ import {
   Calendar,
   Loader2
 } from 'lucide-react';
+import { getBanners, getEvents, getAwards } from '@/lib/data';
+import { getOptimizedUrl } from '@/lib/image-utils';
 
-export default function Home() {
-  const [featuredEvents, setFeaturedEvents] = useState<any[]>([]);
-  const [awardsCount, setAwardsCount] = useState(0);
-  const [eventsCount, setEventsCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+export const revalidate = 3600; // Revalidate every hour
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [eventsRes, awardsRes] = await Promise.all([
-          fetch('/api/dashboard/events'),
-          fetch('/api/dashboard/awards')
-        ]);
+export default async function Home() {
+  const [bannersData, eventsData, awardsData] = await Promise.all([
+    getBanners('Home'),
+    getEvents(),
+    getAwards()
+  ]);
 
-        const eventsData = await eventsRes.json();
-        const awardsData = await awardsRes.json();
+  const homeBanners = bannersData.map((b: any) => ({
+    id: b._id.toString(),
+    image: b.image,
+    tag: 'Official Update',
+    title: b.title,
+    subtitle: b.subtitle,
+    cta: 'Learn More'
+  }));
 
-        // Take latest 3 upcoming events for homepage
-        const upcoming = eventsData.filter((e: any) => e.type === 'upcoming').slice(0, 3);
-        setFeaturedEvents(upcoming);
-        setEventsCount(eventsData.length);
-        setAwardsCount(awardsData.length);
-        setIsLoading(false);
-      } catch (err) {
-        console.error("Failed to fetch homepage data", err);
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  const eventsCount = eventsData.length;
+  const awardsCount = awardsData.length;
+  const featuredEvents = eventsData.filter((e: any) => e.type === 'upcoming').slice(0, 3);
 
   return (
     <div className="w-full bg-background overflow-x-hidden">
@@ -61,7 +51,7 @@ export default function Home() {
           HERO SECTION — full-width moving banner
       ═══════════════════════════════════════════════ */}
       <section className="w-full">
-        <HeroCarousel />
+        <HeroCarousel initialSlides={homeBanners} />
       </section>
 
       {/* ═══════════════════════════════════════════════
@@ -80,7 +70,7 @@ export default function Home() {
               ].map(({ stat, label, icon: Icon }, idx) => (
                 <div key={idx} className="flex flex-col items-center justify-center py-4 sm:py-0 sm:px-12 text-center gap-2">
                   <Icon className="w-8 h-8 text-white/70 mb-1" />
-                  <div className="text-4xl md:text-5xl font-bold text-white">{isLoading ? '...' : stat}</div>
+                  <div className="text-4xl md:text-5xl font-bold text-white">{stat}</div>
                   <p className="text-primary-foreground/80 text-base font-medium">{label}</p>
                 </div>
               ))}
@@ -232,13 +222,13 @@ export default function Home() {
             </Link>
           </div>
 
-          {!isLoading && featuredEvents.length > 0 ? (
+          {featuredEvents.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
               <div className="md:col-span-8 group relative overflow-hidden rounded-[2.5rem] bg-card border border-border hover:border-primary/30 transition-all duration-500 shadow-xl shadow-primary/5 hover:shadow-primary/20">
                 <div className="grid grid-cols-1 lg:grid-cols-2 h-full min-h-[450px]">
                   <div className="relative overflow-hidden h-64 lg:h-auto">
                     <Image
-                      src={featuredEvents[0].coverImage || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80"}
+                      src={getOptimizedUrl(featuredEvents[0].coverImage || "https://images.unsplash.com/photo-1540575467063-178a50c2df87", { width: 800 })}
                       alt={featuredEvents[0].title}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -246,7 +236,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent" />
                     <div className="absolute top-6 left-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-4 text-center shadow-2xl min-w-[70px]">
                       <p className="text-xs font-bold text-white uppercase tracking-tighter">Event</p>
-                      <p className="text-2xl font-black text-white leading-none whitespace-nowrap">{featuredEvents[0].date.split(',')[0].slice(0, 3)}</p>
+                      <p className="text-2xl font-black text-white leading-none whitespace-nowrap">{featuredEvents[0].date?.split(',')[0].slice(0, 3) || 'TBA'}</p>
                     </div>
                   </div>
 
@@ -281,10 +271,10 @@ export default function Home() {
 
               <div className="md:col-span-4 flex flex-col gap-8">
                 {featuredEvents.slice(1, 3).map((event, i) => (
-                  <Link key={event._id || i} href={`/events/${event._id}`} className="flex-1 group relative overflow-hidden rounded-[2rem] border border-border bg-card hover:border-primary/30 transition-all duration-500 shadow-lg shadow-primary/5 hover:-translate-y-1">
+                  <Link key={event._id?.toString() || i} href={`/events/${event._id}`} className="flex-1 group relative overflow-hidden rounded-[2rem] border border-border bg-card hover:border-primary/30 transition-all duration-500 shadow-lg shadow-primary/5 hover:-translate-y-1">
                     <div className="relative h-44 overflow-hidden">
                       <Image
-                        src={event.coverImage || "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&q=80"}
+                        src={getOptimizedUrl(event.coverImage || "https://images.unsplash.com/photo-1515187029135-18ee286d815b", { width: 600 })}
                         alt={event.title}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -310,14 +300,9 @@ export default function Home() {
                 )}
               </div>
             </div>
-          ) : !isLoading ? (
+          ) : (
             <div className="text-center py-24 bg-secondary/10 rounded-[3rem]">
               <p className="text-foreground/40 font-black uppercase tracking-[0.2em]">Check back later for upcoming highlights.</p>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-32">
-              <Loader2 className="w-12 h-12 animate-spin text-primary mb-4" />
-              <p className="text-foreground/30 text-xs font-black uppercase tracking-widest">Syncing with Association...</p>
             </div>
           )}
         </div>
@@ -360,7 +345,7 @@ export default function Home() {
                 <div className="w-16 h-16 mx-auto mb-5 bg-white/20 rounded-2xl flex items-center justify-center group-hover:bg-white/30 transition-colors group-hover:scale-110 duration-300">
                   <Icon className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-3xl font-black text-white mb-1">{isLoading ? '...' : `${num}+`}</div>
+                <div className="text-3xl font-black text-white mb-1">{`${num}+`}</div>
                 <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
                 <p className="text-primary-foreground/70 text-sm leading-relaxed">{desc}</p>
               </div>

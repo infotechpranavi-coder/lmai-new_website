@@ -1,32 +1,22 @@
-"use client";
-
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import {
   Building2,
-  Target,
-  TrendingUp,
   Globe,
   Zap,
-  Rocket,
-  Award,
   CheckCircle2,
-  Info,
-  Cpu,
-  History,
-  ShieldCheck,
-  ArrowRight,
-  Quote,
-  Users,
-  Search,
-  Trophy
+  TrendingUp,
 } from 'lucide-react';
 import Image from 'next/image';
-import { useBanner } from '@/hooks/useBanner';
+import { getBanners } from '@/lib/data';
+import { getOptimizedUrl } from '@/lib/image-utils';
 
-export default function About() {
-  const bannerImage = useBanner('About', 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1600&q=80');
+export const revalidate = 3600;
+
+export default async function About() {
+  const bannersData = await getBanners('About');
+  const bannerImage = bannersData[0]?.image || 'https://images.unsplash.com/photo-1497215728101-856f4ea42174';
+
   const founders = [
     "Mr. Amit Sheth", "Mr. Surender Kapur", "Mr. Bhavin Kothari", "Mr. Vivek Kapoor",
     "Mr. Sandeep Zaveri", "Mr. Kuldip Goel", "Mr. Rajesh Chadha", "Mr. Manish Desai"
@@ -38,13 +28,13 @@ export default function About() {
       {/* ──────────────────────────────────────────────────────────
           HERO SECTION
       ────────────────────────────────────────────────────────── */}
-      <section className="relative h-[400px] md:h-[500px] w-full overflow-hidden">
+      <section className="relative h-[500px] md:h-[650px] w-full overflow-hidden">
         <Image
-          src={bannerImage}
+          src={getOptimizedUrl(bannerImage, { width: 1600 })}
           alt="LMAI Banner"
           fill
           priority
-          className="object-cover brightness-50"
+          className="object-cover brightness-[0.7]"
         />
         <div className="absolute inset-0 flex items-center justify-center text-center px-4">
           <div className="max-w-4xl space-y-6">
@@ -191,7 +181,7 @@ export default function About() {
               <div className="absolute -inset-10 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
               <div className="relative aspect-square max-w-[500px] mx-auto rounded-[5rem] overflow-hidden border-8 border-secondary group hover:rotate-2 transition-transform duration-1000">
                 <Image
-                  src="https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=1200&q=80"
+                  src={getOptimizedUrl("https://images.unsplash.com/photo-1532375810709-75b1da00537c", { width: 800 })}
                   alt="Vision India Growth"
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-[2s]"

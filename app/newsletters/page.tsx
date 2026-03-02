@@ -1,39 +1,19 @@
-"use client";
-
-import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { FileText, Download, Calendar, Mail, ArrowRight, Loader2 } from 'lucide-react';
+import { FileText, Download, Calendar, Mail, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useBanner } from '@/hooks/useBanner';
+import { getBanners, getNewsletters } from '@/lib/data';
+import { getOptimizedUrl } from '@/lib/image-utils';
 
-export default function Newsletters() {
-  const [newsletters, setNewsletters] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const bannerImage = useBanner('Newsletters', 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=80');
+export const revalidate = 3600;
 
-  useEffect(() => {
-    fetch('/api/dashboard/newsletters')
-      .then(res => res.json())
-      .then(data => {
-        setNewsletters(data);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch newsletters", err);
-        setIsLoading(false);
-      });
-  }, []);
+export default async function Newsletters() {
+  const [bannersData, newsletters] = await Promise.all([
+    getBanners('Newsletters'),
+    getNewsletters()
+  ]);
 
-  if (isLoading) {
-    return (
-      <div className="w-full min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
-        <Loader2 className="w-12 h-12 animate-spin text-primary" />
-        <p className="text-sm font-black uppercase tracking-widest text-foreground/40">Loading Publications...</p>
-      </div>
-    );
-  }
+  const bannerImage = bannersData[0]?.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c';
 
   return (
     <div className="w-full bg-background selection:bg-primary selection:text-white">
@@ -41,15 +21,15 @@ export default function Newsletters() {
       {/* ──────────────────────────────────────────────────────────
           HERO SECTION
       ────────────────────────────────────────────────────────── */}
-      <section className="relative h-[400px] md:h-[500px] w-full overflow-hidden">
+      <section className="relative h-[500px] md:h-[650px] w-full overflow-hidden">
         <Image
-          src={bannerImage}
+          src={getOptimizedUrl(bannerImage, { width: 1600 })}
           alt="LMAI Newsletters"
           fill
           priority
-          className="object-cover brightness-[0.4]"
+          className="object-cover brightness-[0.7]"
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/20" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <div className="flex items-center gap-2 text-primary text-[10px] font-black uppercase tracking-[0.4em] mb-4">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -84,13 +64,13 @@ export default function Newsletters() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
-              {newsletters.map((item, idx) => (
-                <div key={item._id || idx} className="group relative flex flex-col sm:flex-row gap-8 items-start p-2 hover:bg-secondary/10 rounded-3xl transition-colors duration-500">
+              {newsletters.map((item: any, idx) => (
+                <div key={item._id?.toString() || idx} className="group relative flex flex-col sm:flex-row gap-8 items-start p-2 hover:bg-secondary/10 rounded-3xl transition-colors duration-500">
                   {/* Visual Placeholder for Document */}
                   <div className="relative w-full sm:w-48 aspect-[3/4] shrink-0 overflow-hidden rounded-2xl bg-[#0a0a0b] flex flex-col items-center justify-center group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] transition-all duration-500">
                     <div className="absolute top-0 left-0 w-full h-2 bg-primary" />
                     {item.image ? (
-                      <Image src={item.image} alt={item.title} fill className="object-cover opacity-50 group-hover:opacity-80 transition-opacity" />
+                      <Image src={getOptimizedUrl(item.image, { width: 400 })} alt={item.title} fill className="object-cover opacity-50 group-hover:opacity-80 transition-opacity" />
                     ) : (
                       <FileText className="w-16 h-16 text-white/20 group-hover:text-primary transition-colors duration-500" />
                     )}

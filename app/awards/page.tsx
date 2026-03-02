@@ -1,39 +1,20 @@
-"use client";
-
-import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Trophy, ArrowUpRight, Star, Loader2 } from 'lucide-react';
+import { Trophy, ArrowUpRight, Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useBanner } from '@/hooks/useBanner';
+import { getBanners, getAwards } from '@/lib/data';
+import { getOptimizedUrl } from '@/lib/image-utils';
 
-export default function Awards() {
-  const [awards, setAwards] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const bannerImage = useBanner('Awards', 'https://images.unsplash.com/photo-1516323087525-4b3627f794de?w=1600&q=80');
+export const revalidate = 3600;
 
-  useEffect(() => {
-    fetch('/api/dashboard/awards')
-      .then(res => res.json())
-      .then(data => {
-        setAwards(data);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch awards", err);
-        setIsLoading(false);
-      });
-  }, []);
+export default async function Awards() {
+  const [bannersData, awardsData] = await Promise.all([
+    getBanners('Awards'),
+    getAwards()
+  ]);
 
-  if (isLoading) {
-    return (
-      <div className="w-full min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
-        <Loader2 className="w-12 h-12 animate-spin text-primary" />
-        <p className="text-sm font-black uppercase tracking-widest text-foreground/40">Loading Awards...</p>
-      </div>
-    );
-  }
+  const bannerImage = bannersData[0]?.image || 'https://images.unsplash.com/photo-1516323087525-4b3627f794de';
 
   return (
     <div className="w-full bg-background selection:bg-primary selection:text-white">
@@ -41,15 +22,15 @@ export default function Awards() {
       {/* ──────────────────────────────────────────────────────────
           HERO SECTION
       ────────────────────────────────────────────────────────── */}
-      <section className="relative h-[350px] md:h-[450px] w-full overflow-hidden">
+      <section className="relative h-[500px] md:h-[650px] w-full overflow-hidden">
         <Image
-          src={bannerImage}
+          src={getOptimizedUrl(bannerImage, { width: 1600 })}
           alt="LMAI Awards"
           fill
           priority
-          className="object-cover brightness-[0.4]"
+          className="object-cover brightness-[0.7]"
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/20" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <div className="flex items-center gap-2 text-primary text-[10px] font-black uppercase tracking-[0.4em] mb-4">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -76,18 +57,18 @@ export default function Awards() {
             </p>
           </div>
 
-          {awards.length === 0 ? (
+          {awardsData.length === 0 ? (
             <div className="text-center py-24 bg-secondary/20 rounded-[3rem]">
               <p className="text-foreground/40 font-black uppercase tracking-[0.2em]">No awards recorded in the gallery yet.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {awards.map((award, idx) => (
-                <Link href={`/awards/${award._id}`} key={award._id || idx} className="block group">
+              {awardsData.map((award, idx) => (
+                <Link href={`/awards/${award._id}`} key={award._id?.toString() || idx} className="block group">
                   <div className="overflow-hidden transition-all duration-500">
                     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl md:rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
                       <Image
-                        src={award.image}
+                        src={getOptimizedUrl(award.image || 'https://images.unsplash.com/photo-1579546678183-a84ee63a2aa0', { width: 600 })}
                         alt={award.title}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-700"

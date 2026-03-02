@@ -1,9 +1,6 @@
-"use client";
-
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
-  CheckCircle2,
   Download,
   Users,
   TrendingUp,
@@ -12,7 +9,6 @@ import {
   ShieldCheck,
   Database,
   Search,
-  BookOpen,
   BaggageClaim,
   MessageSquare,
   Award,
@@ -23,10 +19,15 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useBanner } from '@/hooks/useBanner';
+import { getBanners } from '@/lib/data';
+import { getOptimizedUrl } from '@/lib/image-utils';
 
-export default function Membership() {
-  const bannerImage = useBanner('Membership', 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1600&q=80');
+export const revalidate = 3600;
+
+export default async function Membership() {
+  const bannersData = await getBanners('Membership');
+  const bannerImage = bannersData[0]?.image || 'https://images.unsplash.com/photo-1557804506-669a67965ba0';
+
   const membershipTypes = [
     {
       title: "ORDINARY membership",
@@ -72,13 +73,13 @@ export default function Membership() {
       {/* ──────────────────────────────────────────────────────────
           HERO SECTION
       ────────────────────────────────────────────────────────── */}
-      <section className="relative h-[300px] md:h-[400px] w-full overflow-hidden">
+      <section className="relative h-[500px] md:h-[650px] w-full overflow-hidden">
         <Image
-          src={bannerImage}
+          src={getOptimizedUrl(bannerImage, { width: 1600 })}
           alt="LMAI Membership Banner"
           fill
           priority
-          className="object-cover brightness-[0.3]"
+          className="object-cover brightness-[0.6]"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <div className="flex items-center gap-2 text-primary text-[10px] font-black uppercase tracking-[0.4em] mb-4">

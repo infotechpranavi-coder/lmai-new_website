@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 
 const AUTOPLAY_INTERVAL = 4500;
 
-export default function HeroCarousel() {
-  const [slides, setSlides] = useState<any[]>([]);
+export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] }) {
+  const [slides, setSlides] = useState<any[]>(initialSlides || []);
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
@@ -17,6 +17,7 @@ export default function HeroCarousel() {
   const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const fetchBanners = useCallback(async () => {
+    if (initialSlides && initialSlides.length > 0) return;
     try {
       const res = await fetch('/api/dashboard/banners');
       const data = await res.json();
@@ -47,7 +48,7 @@ export default function HeroCarousel() {
     } catch (err) {
       console.error("Failed to fetch banners", err);
     }
-  }, []);
+  }, [initialSlides]);
 
   useEffect(() => {
     fetchBanners();

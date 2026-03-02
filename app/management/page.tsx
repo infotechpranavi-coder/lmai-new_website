@@ -1,33 +1,22 @@
-"use client";
-
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Loader2 } from 'lucide-react';
-import { useBanner } from '@/hooks/useBanner';
+import { getBanners, getMembers } from '@/lib/data';
+import { getOptimizedUrl } from '@/lib/image-utils';
 
-export default function Management() {
-  const [members, setMembers] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const bannerImage = useBanner('Management', 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1600&q=80');
+export const revalidate = 3600;
 
-  useEffect(() => {
-    fetch('/api/dashboard/members')
-      .then(res => res.json())
-      .then(data => {
-        setMembers(data);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch members", err);
-        setIsLoading(false);
-      });
-  }, []);
+export default async function Management() {
+  const [bannersData, members] = await Promise.all([
+    getBanners('Management'),
+    getMembers()
+  ]);
+
+  const bannerImage = bannersData[0]?.image || 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4';
 
   const categorizedMembers = {
-    boardOfDirectors: members.filter(m => m.category === 'boardOfDirectors'),
-    lmaiForce: members.filter(m => m.category === 'lmaiForce'),
-    pastPresidents: members.filter(m => m.category === 'pastPresidents'),
+    boardOfDirectors: members.filter((m: any) => m.category === 'boardOfDirectors'),
+    lmaiForce: members.filter((m: any) => m.category === 'lmaiForce'),
+    pastPresidents: members.filter((m: any) => m.category === 'pastPresidents'),
   };
 
   const SectionHeader = ({ subtitle, title }: { subtitle: string, title: string }) => (
@@ -46,7 +35,7 @@ export default function Management() {
       <div className="overflow-hidden transition-all duration-500">
         <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl md:rounded-3xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
           <Image
-            src={person.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop"}
+            src={getOptimizedUrl(person.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d", { width: 400 })}
             alt={person.name}
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-700 grayscale hover:grayscale-0"
@@ -66,30 +55,21 @@ export default function Management() {
     </div>
   );
 
-  if (isLoading) {
-    return (
-      <div className="w-full min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
-        <Loader2 className="w-12 h-12 animate-spin text-primary" />
-        <p className="text-sm font-black uppercase tracking-widest text-foreground/40">Loading Leadership...</p>
-      </div>
-    );
-  }
-
   return (
     <div className="w-full bg-background selection:bg-primary selection:text-white">
 
       {/* ──────────────────────────────────────────────────────────
           HERO SECTION
       ────────────────────────────────────────────────────────── */}
-      <section className="relative h-[400px] md:h-[500px] w-full overflow-hidden">
+      <section className="relative h-[500px] md:h-[650px] w-full overflow-hidden">
         <Image
-          src={bannerImage}
+          src={getOptimizedUrl(bannerImage, { width: 1600 })}
           alt="LMAI Leadership"
           fill
           priority
-          className="object-cover brightness-[0.4]"
+          className="object-cover brightness-[0.7]"
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/20" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <div className="flex items-center gap-2 text-primary text-[10px] font-black uppercase tracking-[0.4em] mb-4">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -111,8 +91,8 @@ export default function Management() {
           <div className="max-w-7xl mx-auto">
             <SectionHeader subtitle="Executive Governance" title="Board of Directors" />
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 sm:gap-x-6 gap-y-10">
-              {categorizedMembers.boardOfDirectors.map((person, idx) => (
-                <MemberCard key={person._id || idx} person={person} />
+              {categorizedMembers.boardOfDirectors.map((person: any, idx) => (
+                <MemberCard key={person._id?.toString() || idx} person={person} />
               ))}
             </div>
           </div>
@@ -127,8 +107,8 @@ export default function Management() {
           <div className="max-w-7xl mx-auto">
             <SectionHeader subtitle="Next Generation Leaders" title="LMAI Force" />
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 sm:gap-x-6 gap-y-10">
-              {categorizedMembers.lmaiForce.map((person, idx) => (
-                <MemberCard key={person._id || idx} person={person} />
+              {categorizedMembers.lmaiForce.map((person: any, idx) => (
+                <MemberCard key={person._id?.toString() || idx} person={person} />
               ))}
             </div>
           </div>
@@ -143,8 +123,8 @@ export default function Management() {
           <div className="max-w-7xl mx-auto">
             <SectionHeader subtitle="Legacy & Vision" title="Past Presidents" />
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 sm:gap-x-6 gap-y-10">
-              {categorizedMembers.pastPresidents.map((person, idx) => (
-                <MemberCard key={person._id || idx} person={person} />
+              {categorizedMembers.pastPresidents.map((person: any, idx) => (
+                <MemberCard key={person._id?.toString() || idx} person={person} />
               ))}
             </div>
           </div>
