@@ -6,10 +6,12 @@ import { Card } from '@/components/ui/card';
 import { FileText, Download, Calendar, Mail, ArrowRight, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useBanner } from '@/hooks/useBanner';
 
 export default function Newsletters() {
   const [newsletters, setNewsletters] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const bannerImage = useBanner('Newsletters', 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=80');
 
   useEffect(() => {
     fetch('/api/dashboard/newsletters')
@@ -41,7 +43,7 @@ export default function Newsletters() {
       ────────────────────────────────────────────────────────── */}
       <section className="relative h-[400px] md:h-[500px] w-full overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=80"
+          src={bannerImage}
           alt="LMAI Newsletters"
           fill
           priority

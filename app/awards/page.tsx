@@ -6,10 +6,12 @@ import { Card } from '@/components/ui/card';
 import { Trophy, ArrowUpRight, Star, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useBanner } from '@/hooks/useBanner';
 
 export default function Awards() {
   const [awards, setAwards] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const bannerImage = useBanner('Awards', 'https://images.unsplash.com/photo-1516323087525-4b3627f794de?w=1600&q=80');
 
   useEffect(() => {
     fetch('/api/dashboard/awards')
@@ -41,7 +43,7 @@ export default function Awards() {
       ────────────────────────────────────────────────────────── */}
       <section className="relative h-[350px] md:h-[450px] w-full overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1516323087525-4b3627f794de?w=1600&q=80"
+          src={bannerImage}
           alt="LMAI Awards"
           fill
           priority

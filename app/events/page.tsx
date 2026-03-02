@@ -6,12 +6,14 @@ import { Card } from '@/components/ui/card';
 import { Calendar, MapPin, Users, ArrowRight, ArrowUpRight, Clock, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useBanner } from '@/hooks/useBanner';
 
 export default function Events() {
   const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
   const [pastEvents, setPastEvents] = useState<any[]>([]);
   const [isGridView, setIsGridView] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const bannerImage = useBanner('Events', 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&q=80');
 
   useEffect(() => {
     fetch('/api/dashboard/events')
@@ -46,7 +48,7 @@ export default function Events() {
       ────────────────────────────────────────────────────────── */}
       <section className="relative h-[350px] md:h-[450px] w-full overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&q=80"
+          src={bannerImage}
           alt="LMAI Events Banner"
           fill
           priority

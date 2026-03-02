@@ -6,10 +6,12 @@ import { Card } from '@/components/ui/card';
 import { Play, Calendar, User, ArrowRight, Video, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useBanner } from '@/hooks/useBanner';
 
 export default function Presentations() {
   const [presentations, setPresentations] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const bannerImage = useBanner('Presentations', 'https://images.unsplash.com/photo-1475721027785-f74dea327912?w=1600&q=80');
 
   useEffect(() => {
     fetch('/api/dashboard/presentations')
@@ -41,7 +43,7 @@ export default function Presentations() {
       ────────────────────────────────────────────────────────── */}
       <section className="relative h-[400px] md:h-[500px] w-full overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1475721027785-f74dea327912?w=1600&q=80"
+          src={bannerImage}
           alt="LMAI Presentations"
           fill
           priority

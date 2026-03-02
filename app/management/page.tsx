@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
+import { useBanner } from '@/hooks/useBanner';
 
 export default function Management() {
   const [members, setMembers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const bannerImage = useBanner('Management', 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1600&q=80');
 
   useEffect(() => {
     fetch('/api/dashboard/members')
@@ -81,7 +83,7 @@ export default function Management() {
       ────────────────────────────────────────────────────────── */}
       <section className="relative h-[400px] md:h-[500px] w-full overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1600&q=80"
+          src={bannerImage}
           alt="LMAI Leadership"
           fill
           priority

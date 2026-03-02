@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
@@ -21,13 +23,10 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-
-export const metadata = {
-  title: 'Membership | LMAI - Label Manufacturers Association Of India',
-  description: 'Join LMAI to access exclusive industry insights, networking opportunities, and professional development in the Indian label sector.',
-};
+import { useBanner } from '@/hooks/useBanner';
 
 export default function Membership() {
+  const bannerImage = useBanner('Membership', 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1600&q=80');
   const membershipTypes = [
     {
       title: "ORDINARY membership",
@@ -75,7 +74,7 @@ export default function Membership() {
       ────────────────────────────────────────────────────────── */}
       <section className="relative h-[300px] md:h-[400px] w-full overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1600&q=80"
+          src={bannerImage}
           alt="LMAI Membership Banner"
           fill
           priority

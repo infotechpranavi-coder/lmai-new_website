@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -21,13 +23,10 @@ import {
   Trophy
 } from 'lucide-react';
 import Image from 'next/image';
-
-export const metadata = {
-  title: 'About Us | LMAI - Label Manufacturers Association Of India',
-  description: 'Learn about LMAI, our institutional history, industry vision, and commitment to technological advancement in the Indian label sector.',
-};
+import { useBanner } from '@/hooks/useBanner';
 
 export default function About() {
+  const bannerImage = useBanner('About', 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1600&q=80');
   const founders = [
     "Mr. Amit Sheth", "Mr. Surender Kapur", "Mr. Bhavin Kothari", "Mr. Vivek Kapoor",
     "Mr. Sandeep Zaveri", "Mr. Kuldip Goel", "Mr. Rajesh Chadha", "Mr. Manish Desai"
@@ -41,7 +40,7 @@ export default function About() {
       ────────────────────────────────────────────────────────── */}
       <section className="relative h-[400px] md:h-[500px] w-full overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1600&q=80"
+          src={bannerImage}
           alt="LMAI Banner"
           fill
           priority

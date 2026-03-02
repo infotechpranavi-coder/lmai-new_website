@@ -5,8 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Mail, Phone, MapPin, Clock, ArrowRight, Send, CheckCircle2, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useBanner } from '@/hooks/useBanner';
 
 export default function Contact() {
+  const bannerImage = useBanner('Contact', 'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&q=80');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -46,7 +48,7 @@ export default function Contact() {
       ────────────────────────────────────────────────────────── */}
       <section className="relative h-[400px] md:h-[500px] w-full overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&q=80"
+          src={bannerImage}
           alt="Contact LMAI"
           fill
           priority
