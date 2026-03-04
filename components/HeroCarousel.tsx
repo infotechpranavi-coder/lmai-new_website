@@ -123,7 +123,7 @@ export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] 
   const slide = slides[current];
 
   return (
-    <div className="relative w-full h-[40vh] md:h-[88vh] min-h-[300px] md:min-h-[600px] overflow-hidden bg-gray-900 select-none">
+    <div className="relative w-full h-[180px] md:h-[88vh] min-h-[180px] md:min-h-[600px] overflow-hidden bg-gray-900 select-none">
       {/* ── Slides ── */}
       {slides.map((s, i) => (
         <div
@@ -153,7 +153,7 @@ export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] 
 
       {/* ── Text Content ── */}
       {slide.title?.trim() && (
-        <div className="absolute inset-0 z-20 flex items-end pb-12 md:pb-32">
+        <div className="absolute inset-0 z-20 flex items-end pb-4 md:pb-32">
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full">
             <div
               key={current}
@@ -167,24 +167,24 @@ export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] 
               ].join(' ')}
             >
               {/* Tag pill */}
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/80 backdrop-blur-sm text-primary-foreground text-[10px] font-bold uppercase tracking-widest mb-3 border border-primary/50 shadow-lg">
+              <span className="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/80 backdrop-blur-sm text-primary-foreground text-[10px] font-bold uppercase tracking-widest mb-2 border border-primary/50 shadow-lg">
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                 {slide.tag}
               </span>
 
               {/* Headline */}
-              <h1 className="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.0] mb-3 drop-shadow-2xl whitespace-pre-line">
+              <h1 className="text-xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.0] mb-2 drop-shadow-2xl whitespace-pre-line">
                 {slide.title}
               </h1>
 
               {/* Subtitle */}
-              <div className="text-lg md:text-xl text-white/75 max-w-xl mb-8 leading-relaxed">
+              <div className="hidden sm:block text-sm md:text-xl text-white/75 max-w-xl mb-4 leading-relaxed">
                 {slide.subtitle}
               </div>
 
               {/* CTA */}
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-5 text-base font-bold shadow-xl shadow-primary/40 hover:shadow-primary/60 hover:-translate-y-0.5 transition-all duration-300">
-                {slide.cta} <ArrowRight className="ml-2 w-4 h-4" />
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-6 py-3 md:px-8 md:py-5 text-xs md:text-base font-bold shadow-xl shadow-primary/40 hover:shadow-primary/60 hover:-translate-y-0.5 transition-all duration-300">
+                {slide.cta} <ArrowRight className="ml-2 w-3 h-3 md:w-4 md:h-4" />
               </Button>
             </div>
           </div>
