@@ -61,7 +61,7 @@ export default async function Management() {
       {/* ──────────────────────────────────────────────────────────
           HERO SECTION
       ────────────────────────────────────────────────────────── */}
-      <section className="relative h-[500px] md:h-[650px] w-full overflow-hidden">
+      <section className="relative h-[180px] md:h-[650px] w-full overflow-hidden">
         <Image
           src={getOptimizedUrl(bannerImage, { width: 1600 })}
           alt="LMAI Leadership"
@@ -76,7 +76,7 @@ export default async function Management() {
             <span>/ /</span>
             <span className="text-white">Management</span>
           </div>
-          <h1 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
+          <h1 className="text-3xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
             Our <span className="text-primary italic">Leadership</span>
           </h1>
           <div className="w-24 h-1.5 bg-primary mt-8 rounded-full" />

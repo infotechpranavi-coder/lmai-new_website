@@ -123,7 +123,7 @@ export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] 
   const slide = slides[current];
 
   return (
-    <div className="relative w-full h-[88vh] min-h-[560px] overflow-hidden bg-gray-900 select-none">
+    <div className="relative w-full h-[40vh] md:h-[88vh] min-h-[300px] md:min-h-[600px] overflow-hidden bg-gray-900 select-none">
       {/* ── Slides ── */}
       {slides.map((s, i) => (
         <div
@@ -153,7 +153,7 @@ export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] 
 
       {/* ── Text Content ── */}
       {slide.title?.trim() && (
-        <div className="absolute inset-0 z-20 flex items-end pb-24 md:pb-32">
+        <div className="absolute inset-0 z-20 flex items-end pb-12 md:pb-32">
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full">
             <div
               key={current}
@@ -167,13 +167,13 @@ export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] 
               ].join(' ')}
             >
               {/* Tag pill */}
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/80 backdrop-blur-sm text-primary-foreground text-xs font-bold uppercase tracking-widest mb-5 border border-primary/50 shadow-lg">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/80 backdrop-blur-sm text-primary-foreground text-[10px] font-bold uppercase tracking-widest mb-3 border border-primary/50 shadow-lg">
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                 {slide.tag}
               </span>
 
               {/* Headline */}
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.0] mb-5 drop-shadow-2xl whitespace-pre-line">
+              <h1 className="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.0] mb-3 drop-shadow-2xl whitespace-pre-line">
                 {slide.title}
               </h1>
 

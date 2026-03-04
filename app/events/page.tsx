@@ -25,7 +25,7 @@ export default async function Events() {
       {/* ──────────────────────────────────────────────────────────
           HERO SECTION
       ────────────────────────────────────────────────────────── */}
-      <section className="relative h-[500px] md:h-[650px] w-full overflow-hidden">
+      <section className="relative h-[180px] md:h-[650px] w-full overflow-hidden">
         <Image
           src={getOptimizedUrl(bannerImage, { width: 1600 })}
           alt="LMAI Events Banner"
@@ -39,7 +39,7 @@ export default async function Events() {
             <span>/ /</span>
             <span className="text-white">Events</span>
           </div>
-          <h1 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
+          <h1 className="text-3xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
             Our <span className="text-primary italic">Events</span>
           </h1>
           <div className="w-24 h-1.5 bg-primary mt-6 rounded-full" />

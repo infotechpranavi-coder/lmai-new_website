@@ -28,7 +28,7 @@ export default async function About() {
       {/* ──────────────────────────────────────────────────────────
           HERO SECTION
       ────────────────────────────────────────────────────────── */}
-      <section className="relative h-[500px] md:h-[650px] w-full overflow-hidden">
+      <section className="relative h-[180px] md:h-[650px] w-full overflow-hidden">
         <Image
           src={getOptimizedUrl(bannerImage, { width: 1600 })}
           alt="LMAI Banner"
@@ -37,8 +37,8 @@ export default async function About() {
           className="object-cover brightness-[0.7]"
         />
         <div className="absolute inset-0 flex items-center justify-center text-center px-4">
-          <div className="max-w-4xl space-y-6">
-            <h1 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
+          <div className="max-w-4xl space-y-4">
+            <h1 className="text-3xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
               About <span className="text-primary italic">LMAI</span>
             </h1>
             <div className="w-24 h-1.5 bg-primary mx-auto rounded-full" />

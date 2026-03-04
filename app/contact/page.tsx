@@ -18,7 +18,7 @@ export default async function Contact() {
       {/* ──────────────────────────────────────────────────────────
           HERO SECTION
       ────────────────────────────────────────────────────────── */}
-      <section className="relative h-[500px] md:h-[650px] w-full overflow-hidden">
+      <section className="relative h-[180px] md:h-[650px] w-full overflow-hidden">
         <Image
           src={getOptimizedUrl(bannerImage, { width: 1600 })}
           alt="Contact LMAI"
@@ -33,7 +33,7 @@ export default async function Contact() {
             <span>/ /</span>
             <span className="text-white">Contact</span>
           </div>
-          <h1 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
+          <h1 className="text-3xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
             Get In <span className="text-primary italic">Touch</span>
           </h1>
           <div className="w-24 h-1.5 bg-primary mt-8 rounded-full" />
