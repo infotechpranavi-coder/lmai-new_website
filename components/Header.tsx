@@ -107,8 +107,8 @@ export default function Header() {
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
-                  'relative text-xs font-black uppercase tracking-[0.15em] py-3 border-b border-border/30 hover:text-primary transition-all flex items-center justify-between group',
-                  pathname === item.href ? 'text-primary' : 'text-foreground/70'
+                  'relative text-xs font-black uppercase tracking-[0.15em] py-4 border-b border-border/10 hover:text-primary transition-all flex items-center justify-between group',
+                  pathname === item.href ? 'text-primary' : 'text-foreground/60'
                 )}
                 style={{ transitionDelay: `${idx * 40}ms` }}
               >
@@ -124,8 +124,8 @@ export default function Header() {
             <div className="flex flex-col gap-4">
               <p className="text-[10px] font-black uppercase tracking-widest text-foreground/40">Quick Action</p>
               <Link href="/membership" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="w-full h-12 rounded-2xl bg-primary text-white font-black uppercase tracking-widest text-xs hover:bg-black transition-all">
-                  Become A Member
+                <button className="w-full h-12 rounded-full bg-primary text-white font-black uppercase tracking-widest text-xs hover:bg-black transition-all shadow-lg shadow-primary/20">
+                  Join Association
                 </button>
               </Link>
             </div>
