@@ -109,7 +109,7 @@ export default async function EventDetail({ params }: { params: Promise<{ slug: 
                         </div>
 
                         <div className="mt-24 text-center">
-                            <Button variant="outline" asChild className="rounded-full border-white/20 text-white hover:bg-white hover:text-black font-bold uppercase tracking-widest text-xs h-14 px-10">
+                            <Button variant="outline" asChild className="rounded-full bg-white border-none text-black hover:bg-primary hover:text-white font-bold uppercase tracking-widest text-xs h-14 px-10 shadow-lg">
                                 <Link href="/events">
                                     Back to All Events
                                 </Link>

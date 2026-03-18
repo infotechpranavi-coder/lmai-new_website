@@ -37,12 +37,12 @@ export default function Header() {
   return (
     <header className={cn(
       "sticky top-0 z-[100] w-full transition-all duration-500",
-      isScrolled ? "bg-white/90 backdrop-blur-xl shadow-[0_2px_20px_-10px_rgba(0,0,0,0.1)] py-2" : "bg-white py-4"
+      isScrolled ? "bg-white/90 backdrop-blur-xl shadow-[0_2px_20px_-10px_rgba(0,0,0,0.1)] py-0.5" : "bg-white py-1"
     )}>
       <nav className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 group z-[110]">
-          <div className="relative w-28 h-20 md:w-32 md:h-24 transition-all duration-500">
+          <div className="relative w-36 h-24 md:w-48 md:h-32 transition-all duration-500">
             <Image
               src="/LMAI-Logo-1-removebg-preview.png"
               alt="LMAI Logo"
@@ -53,8 +53,7 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden xl:flex items-center gap-1">
+        <div className="hidden xl:flex items-center gap-2">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -62,30 +61,18 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'relative px-4 py-2 text-xs font-black uppercase tracking-[0.15em] transition-all duration-300 group',
-                  isActive ? 'text-primary' : 'text-foreground/60 hover:text-primary'
+                  'px-5 py-2 text-sm font-bold transition-all duration-300 rounded-full',
+                  'bg-[#007db7] text-white shadow-lg shadow-[#007db7]/20 hover:shadow-[#007db7]/40 hover:-translate-y-0.5',
+                  isActive && 'ring-2 ring-[#007db7] ring-offset-2 ring-offset-white'
                 )}
               >
-                <span className="relative z-10">{item.name}</span>
-                {isActive && (
-                  <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary rounded-full" />
-                )}
-                {!isActive && (
-                  <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary/20 transition-all duration-300 group-hover:left-4 group-hover:right-4 group-hover:w-[calc(100%-2rem)] rounded-full" />
-                )}
+                {item.name}
               </Link>
             );
           })}
         </div>
 
-        {/* Action Button (Desktop) */}
-        <div className="hidden xl:block">
-          <Link href="/membership">
-            <button className="h-10 px-6 rounded-full bg-primary text-white text-xs font-black uppercase tracking-widest hover:bg-black transition-colors shadow-lg shadow-primary/20">
-              Join Association
-            </button>
-          </Link>
-        </div>
+
 
         {/* Mobile Toggle */}
         <button
@@ -97,7 +84,7 @@ export default function Header() {
 
         {/* Mobile Menu Overlay */}
         <div className={cn(
-          "fixed inset-0 bg-white z-[100] xl:hidden flex flex-col p-8 transition-all duration-700 ease-in-out",
+          "fixed inset-0 bg-white/98 backdrop-blur-2xl z-[100] xl:hidden flex flex-col p-8 transition-all duration-700 ease-in-out",
           isMobileMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         )}>
           <div className="flex flex-col gap-3 mt-24">
@@ -107,29 +94,20 @@ export default function Header() {
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
-                  'relative text-xs font-black uppercase tracking-[0.15em] py-4 border-b border-border/10 hover:text-primary transition-all flex items-center justify-between group',
-                  pathname === item.href ? 'text-primary' : 'text-foreground/60'
+                  'text-lg font-bold py-4 border-b border-black/10 transition-all flex items-center justify-between',
+                  pathname === item.href ? 'text-[#007db7]' : 'text-foreground/80'
                 )}
                 style={{ transitionDelay: `${idx * 40}ms` }}
               >
                 <span>{item.name}</span>
                 {pathname === item.href && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span className="w-2 h-2 rounded-full bg-[#007db7]" />
                 )}
               </Link>
             ))}
           </div>
 
-          <div className="mt-auto pb-12 space-y-8">
-            <div className="flex flex-col gap-4">
-              <p className="text-[10px] font-black uppercase tracking-widest text-foreground/40">Quick Action</p>
-              <Link href="/membership" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="w-full h-12 rounded-full bg-primary text-white font-black uppercase tracking-widest text-xs hover:bg-black transition-all shadow-lg shadow-primary/20">
-                  Join Association
-                </button>
-              </Link>
-            </div>
-          </div>
+
         </div>
       </nav>
     </header>

@@ -2,22 +2,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import HeroCarousel from '@/components/HeroCarousel';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import {
   Award,
   Users,
-  Newspaper,
-  Presentation,
   ArrowRight,
   TrendingUp,
   Zap,
-  Star,
-  Globe,
-  CheckCircle2,
-  ChevronRight,
-  Play,
-  Calendar,
-  Loader2
+  Globe
 } from 'lucide-react';
 import { getBanners, getEvents, getAwards } from '@/lib/data';
 import { getOptimizedUrl } from '@/lib/image-utils';
@@ -42,7 +33,7 @@ export default async function Home() {
 
   const eventsCount = eventsData.length;
   const awardsCount = awardsData.length;
-  const featuredEvents = eventsData.filter((e: any) => e.type === 'upcoming').slice(0, 3);
+
 
   return (
     <div className="w-full bg-background overflow-x-hidden">
@@ -195,118 +186,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────
-          FEATURED EVENTS SECTION
-      ────────────────────────────────────────────────────────── */}
-      <section className="px-4 sm:px-6 lg:px-8 py-32 bg-secondary/5 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
-        <div className="max-w-7xl mx-auto relative">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest">
-                <Star className="w-3 h-3 fill-primary" />
-                Special Events
-              </div>
-              <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tight">
-                Featured <span className="text-primary">Events</span>
-              </h2>
-              <p className="text-lg text-foreground/50 max-w-xl">
-                Elevate your professional journey by attending our curated selection of high-impact gatherings and networking power-sessions.
-              </p>
-            </div>
-            <Link href="/events">
-              <Button variant="ghost" className="group self-start md:self-auto rounded-full text-primary font-bold hover:bg-primary/10 px-6">
-                View All Events <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-          </div>
-
-          {featuredEvents.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
-              <div className="md:col-span-8 group relative overflow-hidden rounded-[2.5rem] bg-card border border-border hover:border-primary/30 transition-all duration-500 shadow-xl shadow-primary/5 hover:shadow-primary/20">
-                <div className="grid grid-cols-1 lg:grid-cols-2 h-full min-h-[450px]">
-                  <div className="relative overflow-hidden h-64 lg:h-auto">
-                    <Image
-                      src={getOptimizedUrl(featuredEvents[0].coverImage || "https://images.unsplash.com/photo-1540575467063-178a50c2df87", { width: 800 })}
-                      alt={featuredEvents[0].title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent" />
-                    <div className="absolute top-6 left-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-4 text-center shadow-2xl min-w-[70px]">
-                      <p className="text-xs font-bold text-white uppercase tracking-tighter">Event</p>
-                      <p className="text-2xl font-black text-white leading-none whitespace-nowrap">{featuredEvents[0].date?.split(',')[0].slice(0, 3) || 'TBA'}</p>
-                    </div>
-                  </div>
-
-                  <div className="p-10 flex flex-col justify-between">
-                    <div>
-                      <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full mb-6 inline-block">
-                        {featuredEvents[0].category || 'Featured'}
-                      </span>
-                      <h3 className="text-2xl md:text-3xl font-black text-foreground mb-4 group-hover:text-primary transition-colors leading-tight">
-                        {featuredEvents[0].title}
-                      </h3>
-                      <p className="text-foreground/60 leading-relaxed mb-8 line-clamp-3">
-                        {featuredEvents[0].description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-4 mb-8">
-                        <div className="flex items-center gap-2 text-sm text-foreground/50 bg-secondary/50 px-3 py-1.5 rounded-xl border border-border">
-                          <Calendar className="w-4 h-4 text-primary" />
-                          <span>{featuredEvents[0].date}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Link href={`/events/${featuredEvents[0]._id}`}>
-                      <Button className="w-full lg:w-max px-8 py-6 rounded-2xl bg-primary text-primary-foreground font-bold hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-1 uppercase tracking-widest text-[10px]">
-                        Details <ArrowUpRight className="ml-2 w-4 h-4" />
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <div className="md:col-span-4 flex flex-col gap-8">
-                {featuredEvents.slice(1, 3).map((event, i) => (
-                  <Link key={event._id?.toString() || i} href={`/events/${event._id}`} className="flex-1 group relative overflow-hidden rounded-[2rem] border border-border bg-card hover:border-primary/30 transition-all duration-500 shadow-lg shadow-primary/5 hover:-translate-y-1">
-                    <div className="relative h-44 overflow-hidden">
-                      <Image
-                        src={getOptimizedUrl(event.coverImage || "https://images.unsplash.com/photo-1515187029135-18ee286d815b", { width: 600 })}
-                        alt={event.title}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
-                    </div>
-                    <div className="p-6">
-                      <h4 className="text-lg font-black text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-1">{event.title}</h4>
-                      <p className="text-xs text-foreground/50 flex items-center gap-2 mb-4">
-                        <Calendar className="w-3 h-3 text-primary" />
-                        {event.date}
-                      </p>
-                      <span className="text-primary text-[10px] font-black uppercase tracking-widest inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Details <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </div>
-                  </Link>
-                ))}
-                {featuredEvents.length < 3 && (
-                  <div className="flex-1 rounded-[2rem] border-2 border-dashed border-border flex items-center justify-center p-8 text-center bg-secondary/5">
-                    <p className="text-foreground/30 text-xs font-black uppercase tracking-widest">More events coming soon</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-24 bg-secondary/10 rounded-[3rem]">
-              <p className="text-foreground/40 font-black uppercase tracking-[0.2em]">Check back later for upcoming highlights.</p>
-            </div>
-          )}
-        </div>
-      </section>
 
       {/* ═══════════════════════════════════════════════
           AWARDS & RECOGNITION — vibrant cards
@@ -436,22 +316,4 @@ export default async function Home() {
   );
 }
 
-function ArrowUpRight(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M7 7h10v10" />
-      <path d="M7 17 17 7" />
-    </svg>
-  );
-}
+
