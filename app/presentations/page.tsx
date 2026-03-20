@@ -65,10 +65,10 @@ export default async function Presentations() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
               {presentations.map((item: any, idx) => (
-                <a href={item.link} target="_blank" rel="noopener noreferrer" key={item._id?.toString() || idx} className="group cursor-pointer">
+                <a href={item.youtubeLink} target="_blank" rel="noopener noreferrer" key={item._id?.toString() || idx} className="group cursor-pointer">
                   <div className="relative aspect-video w-full overflow-hidden rounded-[2rem] bg-[#0a0a0b] shadow-lg group-hover:shadow-2xl transition-all duration-500">
                     <Image
-                      src={getOptimizedUrl(item.image || "https://images.unsplash.com/photo-1540575467063-178a50c2df87", { width: 800 })}
+                      src={getOptimizedUrl(item.thumbnail || "https://images.unsplash.com/photo-1540575467063-178a50c2df87", { width: 800 })}
                       alt={item.title}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100"
