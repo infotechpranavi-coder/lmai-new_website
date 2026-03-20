@@ -30,22 +30,23 @@ const AwardSchema = new Schema({
 // Newsletter Schema
 const NewsletterSchema = new Schema({
     title: { type: String, required: true },
-    category: { type: String, required: true },
-    date: { type: String, required: true },
-    description: { type: String, required: true },
-    fileSize: { type: String },
-    image: { type: String, required: true },
-    file: { type: String, required: true },
+    category: { type: String, default: 'Monthly Digest' },
+    date: { type: String, default: '' },
+    description: { type: String, default: '' },
+    writer: { type: String, default: '' },
+    fileSize: { type: String, default: '' },
+    image: { type: String, default: '' },
+    file: { type: String, required: true }, // link url
 });
 
 // Presentation Schema
 const PresentationSchema = new Schema({
     title: { type: String, required: true },
-    speaker: { type: String, required: true },
-    date: { type: String, required: true },
-    description: { type: String, required: true },
-    thumbnail: { type: String, required: true },
-    category: { type: String, required: true },
+    speaker: { type: String, default: '' },
+    date: { type: String, default: '' },
+    description: { type: String, default: '' },
+    thumbnail: { type: String, default: '' },
+    category: { type: String, default: 'Webinar' },
     youtubeLink: { type: String, required: true },
 });
 

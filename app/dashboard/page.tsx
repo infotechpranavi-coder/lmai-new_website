@@ -493,7 +493,7 @@ export default function Dashboard() {
                                             {banners[selectedPage as keyof typeof banners]?.map((banner: any) => (
                                                 <Card key={banner._id || banner.id} className="overflow-hidden rounded-[2.5rem] border-none shadow-sm hover:shadow-2xl transition-all duration-500 group relative bg-white">
                                                     <div className="aspect-[16/9] relative">
-                                                        <Image src={banner.image} alt={banner.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                                                        <Image src={banner.image || 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?w=1600&q=80'} alt={banner.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                                         <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
                                                         <div className="absolute inset-0 p-8 flex flex-col justify-end text-white text-left">
                                                             <span className="text-[8px] font-black uppercase tracking-[0.3em] text-primary mb-2">Slide {banner.id || banner._id?.slice(-4)}</span>
@@ -611,7 +611,7 @@ export default function Dashboard() {
                                     {eventsData[eventCategory]?.map((ev: any) => (
                                         <Card key={ev._id || ev.id} className="overflow-hidden rounded-[2.5rem] bg-white group hover:shadow-2xl transition-all duration-500 flex flex-col text-left">
                                             <div className="aspect-[16/10] relative overflow-hidden">
-                                                <Image src={ev.coverImage} alt={ev.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                                                <Image src={ev.coverImage || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=1600&q=80'} alt={ev.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all" />
                                                 <div className="absolute top-6 left-6"><span className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white text-[8px] font-black uppercase tracking-widest border border-white/20">{ev.date}</span></div>
                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -764,7 +764,7 @@ export default function Dashboard() {
                                     {awardsData.map((award: any) => (
                                         <Card key={award._id || award.id} className="overflow-hidden rounded-[2.5rem] bg-white group hover:shadow-2xl transition-all duration-500 flex flex-col">
                                             <div className="aspect-[16/10] relative overflow-hidden">
-                                                <Image src={award.image} alt={award.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                                                <Image src={award.image || 'https://images.unsplash.com/photo-1578262825743-a4e402caab09?w=1600&q=80'} alt={award.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all" />
                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                                                     <div className="flex gap-3">
@@ -811,28 +811,32 @@ export default function Dashboard() {
                                                     <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Newsletter Title</label>
                                                     <input type="text" placeholder="EX: LMAI MONTHLY DIGEST - MARCH 2024" value={currentNewsletter?.title || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, title: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest" />
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-4 text-left">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
                                                     <div className="space-y-2">
-                                                        <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Release Date</label>
+                                                        <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Release Date (Optional)</label>
                                                         <input type="text" placeholder="MARCH 1, 2024" value={currentNewsletter?.date || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, date: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest" />
                                                     </div>
                                                     <div className="space-y-2">
-                                                        <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Category</label>
-                                                        <select value={currentNewsletter?.category || 'Monthly Digest'} onChange={e => setCurrentNewsletter({ ...currentNewsletter, category: e.target.value })} className="w-full h-[52px] bg-gray-50 rounded-2xl px-6 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest appearance-none">
-                                                            <option>Monthly Digest</option>
-                                                            <option>Special Edition</option>
-                                                            <option>Technical Report</option>
-                                                        </select>
+                                                        <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Writer/Author (Optional)</label>
+                                                        <input type="text" placeholder="EX: JOHN DOE" value={currentNewsletter?.writer || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, writer: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest" />
                                                     </div>
                                                 </div>
                                                 <div className="space-y-2 text-left">
-                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Description</label>
+                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Category (Optional)</label>
+                                                    <select value={currentNewsletter?.category || 'Monthly Digest'} onChange={e => setCurrentNewsletter({ ...currentNewsletter, category: e.target.value })} className="w-full h-[52px] bg-gray-50 rounded-2xl px-6 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest appearance-none">
+                                                        <option>Monthly Digest</option>
+                                                        <option>Special Edition</option>
+                                                        <option>Technical Report</option>
+                                                    </select>
+                                                </div>
+                                                <div className="space-y-2 text-left">
+                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Description (Optional)</label>
                                                     <textarea rows={3} placeholder="SUMMARIZE THE CONTENT..." value={currentNewsletter?.description || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, description: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest resize-none" />
                                                 </div>
                                             </div>
                                             <div className="space-y-8">
                                                 <div className="space-y-4 text-left font-black">
-                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Edition PDF</label>
+                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Edition PDF URL / File Link</label>
                                                     <div className="flex gap-4">
                                                         <div className="flex-grow">
                                                             <input type="text" placeholder="FILE PATH OR URL" value={currentNewsletter?.file || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, file: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest pr-12" />
@@ -841,7 +845,10 @@ export default function Dashboard() {
                                                         <input type="file" hidden ref={pdfInputRef} accept=".pdf" onChange={e => handleFileUpload(e, (url) => setCurrentNewsletter({ ...currentNewsletter, file: url }))} />
                                                     </div>
                                                 </div>
-
+                                                <div className="space-y-2 text-left">
+                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Custom Cover Image URL (Optional)</label>
+                                                    <input type="text" placeholder="EX: https://site.com/image.jpg" value={currentNewsletter?.image || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, image: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="flex justify-end gap-4 pt-8 border-t border-gray-100 font-black">
@@ -858,7 +865,7 @@ export default function Dashboard() {
                                     {newslettersData.map((nl: any) => (
                                         <Card key={nl._id || nl.id} className="overflow-hidden rounded-[2.5rem] bg-white group hover:shadow-2xl transition-all duration-500 border border-border/50 flex flex-col text-left">
                                             <div className="aspect-[4/5] relative overflow-hidden bg-gray-100">
-                                                <Image src={nl.image} alt={nl.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100" />
+                                                <Image src={nl.image || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1600&q=80'} alt={nl.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100" />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                                                 <div className="absolute inset-x-8 bottom-8 z-10">
                                                     <span className="text-[8px] font-black underline underline-offset-4 decoration-primary text-white tracking-widest uppercase mb-1 block">{nl.category}</span>
@@ -910,16 +917,16 @@ export default function Dashboard() {
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-4 text-left">
                                                     <div className="space-y-2">
-                                                        <label className="text-[10px] font-black uppercase text-foreground/30">Speaker</label>
+                                                        <label className="text-[10px] font-black uppercase text-foreground/30">Speaker (Optional)</label>
                                                         <input type="text" placeholder="NAME" value={currentPresentation?.speaker || ''} onChange={e => setCurrentPresentation({ ...currentPresentation, speaker: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest" />
                                                     </div>
                                                     <div className="space-y-2">
-                                                        <label className="text-[10px] font-black uppercase text-foreground/30">Date</label>
+                                                        <label className="text-[10px] font-black uppercase text-foreground/30">Date (Optional)</label>
                                                         <input type="text" placeholder="MARCH 2024" value={currentPresentation?.date || ''} onChange={e => setCurrentPresentation({ ...currentPresentation, date: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest" />
                                                     </div>
                                                 </div>
                                                 <div className="space-y-2 text-left">
-                                                    <label className="text-[10px] font-black uppercase text-foreground/30">Description</label>
+                                                    <label className="text-[10px] font-black uppercase text-foreground/30">Description (Optional)</label>
                                                     <textarea rows={3} placeholder="BRIEF SUMMARY..." value={currentPresentation?.description || ''} onChange={e => setCurrentPresentation({ ...currentPresentation, description: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest resize-none" />
                                                 </div>
                                             </div>
@@ -956,7 +963,7 @@ export default function Dashboard() {
                                     {presentationsData.map((pres: any) => (
                                         <Card key={pres._id || pres.id} className="overflow-hidden rounded-[2.5rem] bg-white group hover:shadow-2xl transition-all duration-500 flex flex-col text-left">
                                             <div className="aspect-video relative overflow-hidden bg-black">
-                                                <Image src={pres.thumbnail} alt={pres.title} fill className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
+                                                <Image src={pres.thumbnail || 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800&q=80'} alt={pres.title} fill className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
                                                 <div className="absolute inset-0 flex items-center justify-center">
                                                     <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:bg-primary transition-all"><ExternalLink className="w-5 h-5 text-white" /></div>
                                                 </div>
@@ -1064,7 +1071,7 @@ export default function Dashboard() {
                                     {managementData[managementCategory].map((member: any) => (
                                         <Card key={member._id || member.id} className="overflow-hidden rounded-[2rem] bg-white group hover:shadow-xl transition-all duration-500 border border-border/10 flex flex-col text-center p-6">
                                             <div className="aspect-[4/5] relative overflow-hidden rounded-2xl mb-6 bg-gray-100">
-                                                <Image src={member.image} alt={member.name} fill className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                                                <Image src={member.image || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80'} alt={member.name} fill className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/40">
                                                     <div className="flex gap-2">
                                                         <button onClick={() => { setIsEditingMember(true); setCurrentMember(member); }} className="w-10 h-10 rounded-full bg-white text-black hover:bg-primary hover:text-white transition-all flex items-center justify-center shadow-xl"><Edit className="w-4 h-4" /></button>
