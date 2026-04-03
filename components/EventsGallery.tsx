@@ -45,7 +45,7 @@ export default function EventsGallery({ pastEvents }: { pastEvents: any[] }) {
         .animate-gallery-slide {
           display: flex;
           width: max-content;
-          animation: slideGallery 25s linear infinite;
+          animation: slideGallery 60s linear infinite;
         }
         .animate-gallery-slide:hover {
           animation-play-state: paused;
@@ -60,12 +60,12 @@ export default function EventsGallery({ pastEvents }: { pastEvents: any[] }) {
                                 src={getOptimizedUrl(photo.coverImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865', { width: 500 })}
                                 alt={photo.title}
                                 fill
-                                className="object-cover group-hover:scale-110 group-hover:blur-[2px] transition-all duration-700 grayscale group-hover:grayscale-0"
+                                className="object-cover group-hover:scale-110 group-hover:blur-[2px] transition-all duration-700 grayscale-0"
                             />
-                            <div className="absolute inset-0 bg-black/50 group-hover:bg-black/20 transition-colors" />
-                            <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col items-center text-center transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 text-white">
+                            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+                            <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col items-center text-center transform translate-y-0 opacity-100 transition-all duration-500 text-white z-10">
                                 <h4 className="text-xl font-black uppercase tracking-tight mb-4">{photo.title}</h4>
-                                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-lg">
                                     <ArrowRight className="w-5 h-5 text-white" />
                                 </div>
                             </div>
@@ -81,12 +81,12 @@ export default function EventsGallery({ pastEvents }: { pastEvents: any[] }) {
                                     src={getOptimizedUrl(photo.coverImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865', { width: 600 })}
                                     alt={photo.title}
                                     fill
-                                    className="object-cover group-hover:scale-110 group-hover:blur-[2px] transition-all duration-700 grayscale group-hover:grayscale-0"
+                                    className="object-cover group-hover:scale-110 group-hover:blur-[2px] transition-all duration-700 grayscale-0"
                                 />
-                                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/20 transition-colors" />
-                                <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col items-center text-center transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 text-white">
+                                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+                                <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col items-center text-center transform translate-y-0 opacity-100 transition-all duration-500 text-white z-10">
                                     <h4 className="text-xl font-black uppercase tracking-tight mb-4">{photo.title}</h4>
-                                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-lg">
                                         <ArrowRight className="w-5 h-5 text-white" />
                                     </div>
                                 </div>

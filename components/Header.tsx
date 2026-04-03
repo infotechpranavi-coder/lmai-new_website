@@ -32,6 +32,14 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMobileMenuOpen]);
+
   if (pathname.startsWith('/dashboard')) return null;
 
   return (
@@ -39,10 +47,10 @@ export default function Header() {
       "sticky top-0 z-[100] w-full transition-all duration-500",
       isScrolled ? "bg-white/90 backdrop-blur-xl shadow-[0_2px_20px_-10px_rgba(0,0,0,0.1)] py-0.5" : "bg-white py-1"
     )}>
-      <nav className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between">
+      <nav className="max-w-[1600px] mx-auto px-6 lg:px-6 xl:px-12 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 group z-[110]">
-          <div className="relative w-36 h-24 md:w-48 md:h-32 transition-all duration-500">
+          <div className="relative w-32 h-20 lg:w-36 lg:h-24 xl:w-48 xl:h-32 transition-all duration-500">
             <Image
               src="/LMAI-Logo-1-removebg-preview.png"
               alt="LMAI Logo"
@@ -53,7 +61,7 @@ export default function Header() {
           </div>
         </Link>
 
-        <div className="hidden xl:flex items-center gap-2">
+        <div className="hidden lg:flex items-center justify-between flex-1 ml-12 xl:ml-24">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -61,7 +69,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'px-5 py-2 text-sm font-bold transition-all duration-300 rounded-full',
+                  'px-3 py-2 xl:px-5 xl:py-2 text-sm font-bold transition-all duration-300 rounded-full text-center whitespace-nowrap',
                   'bg-[#007db7] text-white shadow-lg shadow-[#007db7]/20 hover:shadow-[#007db7]/40 hover:-translate-y-0.5',
                   isActive && 'ring-2 ring-[#007db7] ring-offset-2 ring-offset-white'
                 )}
@@ -76,7 +84,7 @@ export default function Header() {
 
         {/* Mobile Toggle */}
         <button
-          className="xl:hidden z-[110] p-2 text-foreground hover:bg-secondary rounded-full transition-colors"
+          className="lg:hidden z-[110] p-2 text-foreground hover:bg-secondary rounded-full transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -84,8 +92,8 @@ export default function Header() {
 
         {/* Mobile Menu Overlay */}
         <div className={cn(
-          "fixed inset-0 bg-white/98 backdrop-blur-2xl z-[100] xl:hidden flex flex-col p-8 transition-all duration-700 ease-in-out",
-          isMobileMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+          "fixed inset-0 bg-white z-[120] lg:hidden flex flex-col p-8 transition-all duration-500 ease-in-out h-screen",
+          isMobileMenuOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "-translate-y-full opacity-0 pointer-events-none"
         )}>
           <div className="flex flex-col gap-3 mt-24">
             {navItems.map((item, idx) => (
