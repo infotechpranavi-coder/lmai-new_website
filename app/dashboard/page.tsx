@@ -389,12 +389,11 @@ export default function Dashboard() {
                     </div>
 
                     <div className="flex items-center gap-4">
-                        <div className="text-right hidden sm:block">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-foreground">Sandeep Zaveri</p>
-                            <p className="text-[8px] font-bold text-primary uppercase tracking-widest">LMAI PRESIDENT</p>
+                        <div className="text-right hidden sm:block ml-2">
+                            <p className="text-[10px] font-black uppercase tracking-widest text-foreground">Admin</p>
                         </div>
-                        <div className="w-12 h-12 rounded-2xl bg-white shadow-md border border-border p-1">
-                            <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="P" width={100} height={100} className="rounded-xl object-cover grayscale" />
+                        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                            <User className="w-5 h-5" />
                         </div>
                     </div>
                 </header>

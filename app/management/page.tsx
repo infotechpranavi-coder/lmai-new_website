@@ -38,9 +38,8 @@ export default async function Management() {
             src={getOptimizedUrl(person.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d", { width: 400 })}
             alt={person.name}
             fill
-            className="object-cover group-hover:scale-110 transition-transform duration-700 grayscale hover:grayscale-0"
+            className="object-cover group-hover:scale-110 transition-transform duration-700"
           />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
         </div>
 
         <div className="py-6 px-1 space-y-1 text-center">
