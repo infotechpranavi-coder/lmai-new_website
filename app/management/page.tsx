@@ -19,9 +19,8 @@ export default async function Management() {
     pastPresidents: members.filter((m: any) => m.category === 'pastPresidents'),
   };
 
-  const SectionHeader = ({ subtitle, title }: { subtitle: string, title: string }) => (
+  const SectionHeader = ({ title }: { title: string }) => (
     <div className="mb-20 space-y-4">
-      <span className="text-primary text-xs font-black uppercase tracking-widest block">{subtitle}</span>
       <h2 className="text-4xl md:text-6xl font-black text-foreground uppercase tracking-tighter leading-none">
         {title.split(' ').map((word, i, arr) => (
           <span key={i} className={i === arr.length - 1 ? "text-primary italic" : ""}>{word} </span>
@@ -46,7 +45,7 @@ export default async function Management() {
           <h3 className="text-lg font-black uppercase tracking-tighter group-hover:text-primary transition-colors leading-tight">
             {person.name}
           </h3>
-          <p className="text-[9px] font-black uppercase tracking-[0.2em] text-foreground/40">
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-foreground">
             {person.title || person.designation}
           </p>
         </div>
@@ -88,7 +87,7 @@ export default async function Management() {
       {categorizedMembers.boardOfDirectors.length > 0 && (
         <section className="py-32 px-4 sm:px-6 lg:px-24 bg-white">
           <div className="max-w-7xl mx-auto">
-            <SectionHeader subtitle="Executive Governance" title="Board of Directors" />
+            <SectionHeader title="Board of Directors" />
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 sm:gap-x-6 gap-y-10">
               {categorizedMembers.boardOfDirectors.map((person: any, idx) => (
                 <MemberCard key={person._id?.toString() || idx} person={person} />
@@ -104,7 +103,7 @@ export default async function Management() {
       {categorizedMembers.lmaiForce.length > 0 && (
         <section className="py-32 px-4 sm:px-6 lg:px-24 bg-secondary/10">
           <div className="max-w-7xl mx-auto">
-            <SectionHeader subtitle="Next Generation Leaders" title="LMAI Force" />
+            <SectionHeader title="LMAI Force" />
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 sm:gap-x-6 gap-y-10">
               {categorizedMembers.lmaiForce.map((person: any, idx) => (
                 <MemberCard key={person._id?.toString() || idx} person={person} />
@@ -120,7 +119,7 @@ export default async function Management() {
       {categorizedMembers.pastPresidents.length > 0 && (
         <section className="py-32 px-4 sm:px-6 lg:px-24 bg-white">
           <div className="max-w-7xl mx-auto">
-            <SectionHeader subtitle="Legacy & Vision" title="Past Presidents" />
+            <SectionHeader title="Past Presidents" />
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 sm:gap-x-6 gap-y-10">
               {categorizedMembers.pastPresidents.map((person: any, idx) => (
                 <MemberCard key={person._id?.toString() || idx} person={person} />

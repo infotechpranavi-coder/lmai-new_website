@@ -29,7 +29,7 @@ export async function getAwards() {
 
 export async function getMembers() {
     await dbConnect();
-    const data = await Member.find({}).sort({ _id: -1 }).lean();
+    const data = await Member.find({}).sort({ _id: 1 }).lean();
     return serialize(data);
 }
 

@@ -1,14 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getOptimizedUrl } from '@/lib/image-utils';
 
-export default function EventsGallery({ pastEvents }: { pastEvents: any[] }) {
+function EventsGalleryContent({ pastEvents }: { pastEvents: any[] }) {
+    const searchParams = useSearchParams();
     const [isGridView, setIsGridView] = useState(false);
+
+    useEffect(() => {
+        if (searchParams.get('view') === 'gallery') {
+            setIsGridView(true);
+        }
+    }, [searchParams]);
 
     if (pastEvents.length === 0) {
         return (
@@ -96,5 +104,13 @@ export default function EventsGallery({ pastEvents }: { pastEvents: any[] }) {
                 </div>
             )}
         </>
+    );
+}
+
+export default function EventsGallery({ pastEvents }: { pastEvents: any[] }) {
+    return (
+        <Suspense fallback={<div>Loading Gallery...</div>}>
+            <EventsGalleryContent pastEvents={pastEvents} />
+        </Suspense>
     );
 }

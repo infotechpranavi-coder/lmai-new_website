@@ -285,7 +285,7 @@ export default function Dashboard() {
                     </div>
                     <form onSubmit={handleLogin} className="space-y-8">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">User ID</label>
+                            <label className="text-[13px] font-bold uppercase tracking-widest text-white/40">User ID</label>
                             <div className="relative">
                                 <User className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
                                 <input
@@ -299,7 +299,7 @@ export default function Dashboard() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Password</label>
+                            <label className="text-[13px] font-bold uppercase tracking-widest text-white/40">Password</label>
                             <div className="relative">
                                 <Lock className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
                                 <input
@@ -312,7 +312,7 @@ export default function Dashboard() {
                                 />
                             </div>
                         </div>
-                        {error && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest text-center animate-pulse">{error}</p>}
+                        {error && <p className="text-red-500 text-[13px] font-bold uppercase tracking-widest text-center animate-pulse">{error}</p>}
                         <Button type="submit" className="w-full h-16 rounded-full bg-white text-black hover:bg-primary hover:text-white font-black uppercase text-xs tracking-[0.3em] transition-all duration-500 flex items-center justify-between px-10 group shadow-xl">
                             Enter Dashboard <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                         </Button>
@@ -331,14 +331,14 @@ export default function Dashboard() {
                     <span className="text-2xl font-black text-primary uppercase tracking-tighter leading-none mb-1">
                         LMAI <span className="text-white">Admin</span>
                     </span>
-                    <span className="text-[8px] font-black uppercase tracking-[0.4em] text-white/40">Console Panel v1.0</span>
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-white/40">Console Panel v1.0</span>
                 </div>
 
                 <div className="w-full flex-grow overflow-y-auto no-scrollbar mb-8 pr-2">
                     <nav className="w-full space-y-2">
                         {[
                             { id: 'overview', name: 'Overview', icon: LayoutDashboard },
-                            { id: 'banners', name: 'Banner Management', icon: ImagePlus },
+                            { id: 'banners', name: 'Banners', icon: ImagePlus },
                             { id: 'events', name: 'Manage Events', icon: Calendar },
                             { id: 'awards', name: 'Awards Archive', icon: Trophy },
                             { id: 'newsletters', name: 'Newsletters', icon: Newspaper },
@@ -359,7 +359,7 @@ export default function Dashboard() {
                                     setIsEditingMember(false);
                                 }}
                                 className={cn(
-                                    "w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300",
+                                    "w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[13px] font-bold uppercase tracking-widest transition-all duration-300",
                                     activeTab === item.id
                                         ? 'bg-primary text-white shadow-lg shadow-primary/20'
                                         : 'text-white/40 hover:text-white hover:bg-white/5'
@@ -373,7 +373,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="w-full pt-4 border-t border-white/5 shrink-0">
-                    <button onClick={handleLogout} className="w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-red-500 hover:bg-red-500/10 transition-all">
+                    <button onClick={handleLogout} className="w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[13px] font-bold uppercase tracking-widest text-red-500 hover:bg-red-500/10 transition-all">
                         <LogOut className="w-4 h-4" /> Log Out
                     </button>
                 </div>
@@ -384,13 +384,13 @@ export default function Dashboard() {
                 <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                     <div>
                         <h2 className="text-3xl md:text-5xl font-black text-foreground uppercase tracking-tighter leading-none">
-                            {activeTab === 'events' && isEditingEvent ? 'Event Edit' : (activeTab === 'banners' && isAddingBanner ? 'Add Banner' : activeTab)} <span className="text-primary italic">Panel</span>
+                            {activeTab === 'events' && isEditingEvent ? 'Event Edit' : (activeTab === 'banners' && isAddingBanner ? 'Add Banner' : (activeTab === 'banners' ? 'Banners' : activeTab))} <span className="text-primary italic">Panel</span>
                         </h2>
                     </div>
 
                     <div className="flex items-center gap-4">
                         <div className="text-right hidden sm:block ml-2">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-foreground">Admin</p>
+                            <p className="text-[13px] font-bold uppercase tracking-widest text-foreground">Admin</p>
                         </div>
                         <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
                             <User className="w-5 h-5" />
@@ -404,19 +404,19 @@ export default function Dashboard() {
                     {activeTab === 'overview' && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {[
-                                { label: 'Total Members', value: '1,248', delta: '+12%', icon: Users },
-                                { label: 'Live Events', value: '04', delta: 'This Month', icon: Calendar },
-                                { label: 'Newsletter Opens', value: '3.2k', delta: '+5%', icon: Newspaper },
-                                { label: 'Pending Apps', value: '18', delta: 'Requires Action', icon: BarChart3 },
+                                { label: 'Total Members', value: Object.values(managementData).flat().length.toString(), delta: 'Active Roster', icon: Users },
+                                { label: 'Live Events', value: Object.values(eventsData).flat().length.toString().padStart(2, '0'), delta: `${eventsData.upcoming.length} Upcoming`, icon: Calendar },
+                                { label: 'Newsletter Library', value: newslettersData.length.toString(), delta: 'Total Editions', icon: Newspaper },
+                                { label: 'Pending Enquiries', value: enquiriesData.filter((e: any) => e.status === 'Unread').length.toString(), delta: 'Requires Action', icon: BarChart3 },
                             ].map((stat, i) => (
-                                <Card key={i} className="p-8 rounded-[2rem] border-none shadow-sm hover:shadow-xl transition-all duration-500 bg-white">
+                                <Card key={i} className="p-8 rounded-[2rem] border-none shadow-sm hover:shadow-xl transition-all duration-500 bg-white group">
                                     <div className="flex justify-between items-start mb-6">
                                         <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
                                             <stat.icon className="w-6 h-6" />
                                         </div>
-                                        <span className="text-[10px] font-black text-primary uppercase tracking-widest">{stat.delta}</span>
+                                        <span className="text-[13px] font-bold uppercase tracking-widest text-primary">{stat.delta}</span>
                                     </div>
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-foreground/30 mb-2">{stat.label}</h4>
+                                    <h4 className="text-[13px] font-bold uppercase tracking-widest text-foreground/30 mb-2">{stat.label}</h4>
                                     <p className="text-4xl font-black text-foreground uppercase tracking-tighter">{stat.value}</p>
                                 </Card>
                             ))}
@@ -427,16 +427,16 @@ export default function Dashboard() {
                         <div className="space-y-12">
                             {isAddingBanner ? (
                                 <div className="animate-in slide-in-from-right-8 duration-500">
-                                    <button onClick={() => setIsAddingBanner(false)} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground/40 hover:text-primary transition-colors mb-8">
+                                    <button onClick={() => setIsAddingBanner(false)} className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-widest text-foreground/40 hover:text-primary transition-colors mb-8">
                                         <ChevronLeft className="w-4 h-4" /> Back to Assets
                                     </button>
                                     <Card className="p-12 md:p-16 rounded-[3rem] border-none shadow-xl bg-white space-y-12">
                                         <div className="max-w-xl">
                                             <div className="space-y-4">
-                                                <label className="text-[10px] font-black uppercase text-foreground/30">Banner Media</label>
+                                                <label className="text-[13px] font-bold uppercase text-foreground/30">Banner Media</label>
                                                 <div className="flex gap-2 p-1 bg-gray-100 rounded-full w-fit">
-                                                    <button onClick={() => setBannerForm({ ...bannerForm, method: 'link' })} className={cn("px-6 py-2 rounded-full text-[8px] font-black uppercase tracking-widest transition-all", bannerForm.method === 'link' ? 'bg-primary text-white shadow-md' : 'text-foreground/40')}>URL Link</button>
-                                                    <button onClick={() => setBannerForm({ ...bannerForm, method: 'file' })} className={cn("px-6 py-2 rounded-full text-[8px] font-black uppercase tracking-widest transition-all", bannerForm.method === 'file' ? 'bg-primary text-white shadow-md' : 'text-foreground/40')}>Local File</button>
+                                                    <button onClick={() => setBannerForm({ ...bannerForm, method: 'link' })} className={cn("px-6 py-2 rounded-full text-[13px] font-bold uppercase tracking-widest transition-all", bannerForm.method === 'link' ? 'bg-primary text-white shadow-md' : 'text-foreground/40')}>URL Link</button>
+                                                    <button onClick={() => setBannerForm({ ...bannerForm, method: 'file' })} className={cn("px-6 py-2 rounded-full text-[13px] font-bold uppercase tracking-widest transition-all", bannerForm.method === 'file' ? 'bg-primary text-white shadow-md' : 'text-foreground/40')}>Local File</button>
                                                 </div>
                                                 {bannerForm.method === 'link' ? (
                                                     <div key="link-input" className="relative">
@@ -453,7 +453,7 @@ export default function Dashboard() {
                                                         ) : (
                                                             <>
                                                                 <Upload className="w-6 h-6 text-foreground/20 group-hover:text-primary transition-colors mb-2" />
-                                                                <span className="text-[8px] font-black uppercase tracking-widest text-foreground/40">Drop or Click to Upload</span>
+                                                                <span className="text-[13px] font-bold uppercase tracking-widest text-foreground/40">Drop or Click to Upload</span>
                                                             </>
                                                         )}
                                                     </div>
@@ -461,14 +461,14 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="flex justify-end gap-4 pt-8 border-t border-gray-100 font-black">
-                                            <Button onClick={() => setIsAddingBanner(false)} variant="outline" className="rounded-full h-12 px-10 text-[10px] tracking-widest border-2 uppercase">Cancel</Button>
+                                            <Button onClick={() => setIsAddingBanner(false)} variant="outline" className="rounded-full h-12 px-10 text-[13px] tracking-widest border-2 uppercase">Cancel</Button>
                                             <Button onClick={async () => {
                                                 const success = await genericSave('banners', { ...bannerForm, page: selectedPage });
                                                 if (success) {
                                                     setIsAddingBanner(false);
                                                     setBannerForm({ title: '', subtitle: '', image: '', method: 'link' });
                                                 }
-                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-[10px] tracking-widest uppercase shadow-lg shadow-primary/20">Install Banner</Button>
+                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-[13px] tracking-widest uppercase shadow-lg shadow-primary/20">Install Banner</Button>
                                         </div>
                                     </Card>
                                 </div>
@@ -476,28 +476,28 @@ export default function Dashboard() {
                                 <>
                                     <div className="flex flex-wrap gap-2 p-2 bg-white rounded-[2rem] shadow-sm border border-border/50">
                                         {Object.keys(banners).map((page) => (
-                                            <button key={page} onClick={() => setSelectedPage(page)} className={cn("px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.1em] transition-all", selectedPage === page ? 'bg-[#0a0a0b] text-white shadow-xl' : 'text-foreground/40 hover:text-foreground hover:bg-gray-50')}>
+                                            <button key={page} onClick={() => setSelectedPage(page)} className={cn("px-6 py-3 rounded-2xl text-[13px] font-bold uppercase tracking-widest transition-all", selectedPage === page ? 'bg-[#0a0a0b] text-white shadow-xl' : 'text-foreground/40 hover:text-foreground hover:bg-gray-50')}>
                                                 {page}
                                             </button>
                                         ))}
                                     </div>
                                     <div className="xl:col-span-12">
                                         <div className="flex items-center justify-between my-8">
-                                            <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Active Banners for {selectedPage}</h3>
-                                            <Button onClick={() => { setBannerForm({ title: '', subtitle: '', image: '', method: 'link' }); setIsAddingBanner(true); }} className="rounded-full bg-primary text-white h-10 px-6 text-[10px] font-black uppercase tracking-widest group flex items-center gap-2">
+                                            <h3 className="text-[13px] font-bold uppercase tracking-[0.4em] text-primary">Active Banners for {selectedPage}</h3>
+                                            <Button onClick={() => { setBannerForm({ title: '', subtitle: '', image: '', method: 'link' }); setIsAddingBanner(true); }} className="rounded-full bg-primary text-white h-10 px-6 text-[13px] font-bold uppercase tracking-widest group flex items-center gap-2">
                                                 <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform" /> Add New Banner
                                             </Button>
                                         </div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                            {banners[selectedPage as keyof typeof banners]?.map((banner: any) => (
+                                            {banners[selectedPage as keyof typeof banners]?.map((banner: any, index: number) => (
                                                 <Card key={banner._id || banner.id} className="overflow-hidden rounded-[2.5rem] border-none shadow-sm hover:shadow-2xl transition-all duration-500 group relative bg-white">
                                                     <div className="aspect-[16/9] relative">
                                                         <Image src={banner.image || 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?w=1600&q=80'} alt={banner.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                                         <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
                                                         <div className="absolute inset-0 p-8 flex flex-col justify-end text-white text-left">
-                                                            <span className="text-[8px] font-black uppercase tracking-[0.3em] text-primary mb-2">Slide {banner.id || banner._id?.slice(-4)}</span>
+                                                            <span className="text-[13px] font-bold uppercase tracking-[0.3em] text-white mb-2">Slide {index + 1}</span>
                                                             <h4 className="text-xl font-black uppercase tracking-tighter leading-none mb-2">{banner.title}</h4>
-                                                            <p className="text-[10px] font-medium text-white/60 tracking-widest uppercase italic">{banner.subtitle}</p>
+                                                            <p className="text-[13px] font-bold text-white/60 tracking-widest uppercase italic">{banner.subtitle}</p>
                                                         </div>
                                                         <div className="absolute top-4 right-4 flex gap-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                                                             <button className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white hover:text-black transition-all flex items-center justify-center"><Settings className="w-4 h-4" /></button>
@@ -517,36 +517,32 @@ export default function Dashboard() {
                         <div className="space-y-12">
                             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                                 <div className="flex p-1.5 bg-white rounded-full shadow-sm border border-border/10">
-                                    <button onClick={() => { setEventCategory('upcoming'); setIsEditingEvent(false); }} className={cn("px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all", eventCategory === 'upcoming' ? 'bg-primary text-white shadow-lg' : 'text-foreground/40')}>Upcoming</button>
-                                    <button onClick={() => { setEventCategory('past'); setIsEditingEvent(false); }} className={cn("px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all", eventCategory === 'past' ? 'bg-[#0a0a0b] text-white shadow-lg' : 'text-foreground/40')}>Past Highlights</button>
+                                    <button onClick={() => { setEventCategory('upcoming'); setIsEditingEvent(false); }} className={cn("px-8 py-3 rounded-full text-[13px] font-bold uppercase tracking-widest transition-all", eventCategory === 'upcoming' ? 'bg-primary text-white shadow-lg' : 'text-foreground/40')}>Upcoming</button>
+                                    <button onClick={() => { setEventCategory('past'); setIsEditingEvent(false); }} className={cn("px-8 py-3 rounded-full text-[13px] font-bold uppercase tracking-widest transition-all", eventCategory === 'past' ? 'bg-[#0a0a0b] text-white shadow-lg' : 'text-foreground/40')}>Past Highlights</button>
                                 </div>
                                 {!isEditingEvent && (
-                                    <Button onClick={() => { setIsEditingEvent(true); setCurrentEvent({ gallery: [] }); }} className="rounded-full bg-primary text-white h-12 px-8 text-[10px] font-black uppercase tracking-widest">Create New Event</Button>
+                                    <Button onClick={() => { setIsEditingEvent(true); setCurrentEvent({ gallery: [] }); }} className="rounded-full bg-primary text-white h-12 px-8 text-[13px] font-bold uppercase tracking-widest">Create New Event</Button>
                                 )}
                             </div>
 
                             {isEditingEvent ? (
                                 <div className="animate-in slide-in-from-right-8 duration-500">
-                                    <button onClick={() => setIsEditingEvent(false)} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground/40 hover:text-primary mb-8 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Events</button>
+                                    <button onClick={() => setIsEditingEvent(false)} className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-widest text-foreground/40 hover:text-primary mb-8 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Events</button>
                                     <Card className="p-12 md:p-16 rounded-[3rem] shadow-xl bg-white space-y-12">
                                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                                             <div className="space-y-8">
                                                 <div className="space-y-2">
-                                                    <label className="text-[10px] font-black uppercase text-foreground/30 text-left block">Event Title</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30 text-left block">Event Title</label>
                                                     <input type="text" placeholder="NAME OF THE SUMMIT" value={currentEvent?.title || ''} onChange={e => setCurrentEvent({ ...currentEvent, title: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all font-black text-xs tracking-widest" />
                                                 </div>
                                                 <div className="space-y-2">
-                                                    <label className="text-[10px] font-black uppercase text-foreground/30 text-left block">Release Date / Highlight Year</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30 text-left block">Release Date / Highlight Year</label>
                                                     <input type="text" placeholder="JULY 15-18, 2024" value={currentEvent?.date || ''} onChange={e => setCurrentEvent({ ...currentEvent, date: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all font-black text-xs tracking-widest" />
-                                                </div>
-                                                <div className="space-y-2">
-                                                    <label className="text-[10px] font-black uppercase text-foreground/30 text-left block">Description</label>
-                                                    <textarea rows={4} placeholder="BRIEF SUMMARY..." value={currentEvent?.description || ''} onChange={e => setCurrentEvent({ ...currentEvent, description: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all font-black text-xs tracking-widest resize-none" />
                                                 </div>
                                             </div>
                                             <div className="space-y-8">
                                                 <div className="space-y-4">
-                                                    <label className="text-[10px] font-black uppercase text-foreground/30 text-left block">Cover Asset</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30 text-left block">Cover Asset</label>
                                                     <div className="flex gap-4 text-left">
                                                         <div className="flex-grow space-y-2">
                                                             <div className="relative">
@@ -562,7 +558,7 @@ export default function Dashboard() {
                                                 </div>
                                                 <div className="space-y-4">
                                                     <div className="flex items-center justify-between">
-                                                        <label className="text-[10px] font-black uppercase text-foreground/30 text-left block">Gallery Assets ({currentEvent?.gallery?.length || 0})</label>
+                                                        <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30 text-left block">Gallery Assets ({currentEvent?.gallery?.length || 0})</label>
                                                         <div className="flex gap-2">
                                                             <input
                                                                 type="text"
@@ -576,7 +572,7 @@ export default function Dashboard() {
                                                                         }
                                                                     }
                                                                 }}
-                                                                className="bg-gray-50 rounded-lg px-3 py-1 outline-none border border-transparent focus:border-primary transition-all text-[8px] font-black uppercase tracking-widest w-32"
+                                                                className="bg-gray-50 rounded-lg px-3 py-1 outline-none border border-transparent focus:border-primary transition-all text-[11px] font-bold uppercase tracking-widest w-32"
                                                             />
                                                         </div>
                                                     </div>
@@ -612,7 +608,7 @@ export default function Dashboard() {
                                             <div className="aspect-[16/10] relative overflow-hidden">
                                                 <Image src={ev.coverImage || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=1600&q=80'} alt={ev.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all" />
-                                                <div className="absolute top-6 left-6"><span className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white text-[8px] font-black uppercase tracking-widest border border-white/20">{ev.date}</span></div>
+                                                <div className="absolute top-6 left-6"><span className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-widest border border-white/20">{ev.date}</span></div>
                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                                                     <div className="flex gap-3">
                                                         <button onClick={() => { setIsEditingEvent(true); setCurrentEvent(ev); }} className="w-12 h-12 rounded-full bg-white text-black hover:bg-primary hover:text-white transition-all flex items-center justify-center shadow-xl"><Edit className="w-5 h-5" /></button>
@@ -622,11 +618,10 @@ export default function Dashboard() {
                                             </div>
                                             <div className="p-10 flex flex-col flex-grow">
                                                 <h4 className="text-xl font-black uppercase tracking-tighter leading-none mb-4 group-hover:text-primary transition-colors">{ev.title}</h4>
-                                                <p className="text-xs font-bold text-foreground/40 leading-relaxed uppercase tracking-widest line-clamp-2 mb-8">{ev.description}</p>
                                                 <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-6">
                                                     <div className="flex items-center gap-2">
                                                         <Images className="w-4 h-4 text-primary" />
-                                                        <span className="text-[10px] font-black uppercase tracking-widest text-foreground/60">{ev.gallery.length} Images</span>
+                                                        <span className="text-[13px] font-bold uppercase tracking-widest text-foreground/60">{ev.gallery.length} Images</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -642,33 +637,29 @@ export default function Dashboard() {
                             <div className="flex items-center justify-between mb-8">
                                 <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Award Archive</h3>
                                 {!isEditingAward && (
-                                    <Button onClick={() => { setIsEditingAward(true); setCurrentAward({ gallery: [] }); }} className="rounded-full bg-primary text-white h-12 px-8 text-[10px] font-black uppercase tracking-widest flex items-center gap-2 group">
+                                    <Button onClick={() => { setIsEditingAward(true); setCurrentAward({ gallery: [] }); }} className="rounded-full bg-primary text-white h-12 px-8 text-[13px] font-bold uppercase tracking-widest flex items-center gap-2 group">
                                         <Plus className="w-4 h-4 group-hover:rotate-90 transition-all" /> Add New Award
                                     </Button>
                                 )}
                             </div>
                             {isEditingAward ? (
                                 <div className="animate-in slide-in-from-right-8 duration-500">
-                                    <button onClick={() => setIsEditingAward(false)} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground/40 hover:text-primary mb-8 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Awards</button>
+                                    <button onClick={() => setIsEditingAward(false)} className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-widest text-foreground/40 hover:text-primary mb-8 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Awards</button>
                                     <Card className="p-12 md:p-16 rounded-[3rem] shadow-xl bg-white space-y-12">
                                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                                             <div className="space-y-8">
                                                 <div className="space-y-2 text-left">
-                                                    <label className="text-[10px] font-black uppercase text-foreground/30">Award Title</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Award Title</label>
                                                     <input type="text" placeholder="EX: LABEL AWARDS 2024" value={currentAward?.title || ''} onChange={e => setCurrentAward({ ...currentAward, title: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all font-black text-xs tracking-widest" />
                                                 </div>
                                                 <div className="space-y-2 text-left">
-                                                    <label className="text-[10px] font-black uppercase text-foreground/30">Category</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Category</label>
                                                     <input type="text" placeholder="EX: TECHNICAL EXCELLENCE" value={currentAward?.category || ''} onChange={e => setCurrentAward({ ...currentAward, category: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all font-black text-xs tracking-widest" />
-                                                </div>
-                                                <div className="space-y-2 text-left">
-                                                    <label className="text-[10px] font-black uppercase text-foreground/30">Description</label>
-                                                    <textarea rows={4} placeholder="BRIEF SUMMARY..." value={currentAward?.description || ''} onChange={e => setCurrentAward({ ...currentAward, description: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all font-black text-xs tracking-widest resize-none" />
                                                 </div>
                                             </div>
                                             <div className="space-y-8">
                                                 <div className="space-y-4">
-                                                    <label className="text-[10px] font-black uppercase text-foreground/30 text-left block">Award Cover</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30 text-left block">Award Cover</label>
                                                     <div className="flex gap-4 text-left">
                                                         <div className="flex-grow space-y-2">
                                                             <div className="relative">
@@ -684,7 +675,7 @@ export default function Dashboard() {
                                                 </div>
                                                 <div className="space-y-4">
                                                     <div className="flex items-center justify-between">
-                                                        <label className="text-[10px] font-black uppercase text-foreground/30 text-left block">Gallery Assets ({currentAward?.gallery?.length || 0})</label>
+                                                        <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30 text-left block">Gallery Assets ({currentAward?.gallery?.length || 0})</label>
                                                         <div className="flex gap-2">
                                                             <input
                                                                 type="text"
@@ -698,7 +689,7 @@ export default function Dashboard() {
                                                                         }
                                                                     }
                                                                 }}
-                                                                className="bg-gray-50 rounded-lg px-3 py-1 outline-none border border-transparent focus:border-primary transition-all text-[8px] font-black uppercase tracking-widest w-32"
+                                                                className="bg-gray-50 rounded-lg px-3 py-1 outline-none border border-transparent focus:border-primary transition-all text-[11px] font-bold uppercase tracking-widest w-32"
                                                             />
                                                         </div>
                                                     </div>
@@ -773,13 +764,12 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                             <div className="p-10 flex flex-col flex-grow">
-                                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2 italic">{award.category}</span>
+                                                <span className="text-[13px] font-bold uppercase tracking-widest text-primary mb-2 italic">{award.category}</span>
                                                 <h4 className="text-xl font-black uppercase tracking-tighter leading-none mb-4 group-hover:text-primary transition-colors">{award.title}</h4>
-                                                <p className="text-xs font-bold text-foreground/40 leading-relaxed uppercase tracking-widest line-clamp-2 mb-8">{award.description}</p>
                                                 <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-6">
                                                     <div className="flex items-center gap-2">
                                                         <Images className="w-4 h-4 text-primary" />
-                                                        <span className="text-[10px] font-black uppercase tracking-widest text-foreground/60">{award.gallery?.length || 0} Images</span>
+                                                        <span className="text-[13px] font-bold uppercase tracking-widest text-foreground/60">{award.gallery?.length || 0} Images</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -795,33 +785,33 @@ export default function Dashboard() {
                             <div className="flex items-center justify-between mb-8">
                                 <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Newsletter Distribution</h3>
                                 {!isEditingNewsletter && (
-                                    <Button onClick={() => { setIsEditingNewsletter(true); setCurrentNewsletter({ file: '', category: 'Monthly Digest' }); }} className="rounded-full bg-[#0a0a0b] text-white h-12 px-8 text-[10px] font-black uppercase tracking-widest flex items-center gap-2 group shadow-xl hover:bg-primary transition-all">
+                                    <Button onClick={() => { setIsEditingNewsletter(true); setCurrentNewsletter({ file: '', category: 'Monthly Digest' }); }} className="rounded-full bg-[#0a0a0b] text-white h-12 px-8 text-[13px] font-bold uppercase tracking-widest flex items-center gap-2 group shadow-xl hover:bg-primary transition-all">
                                         <FileUp className="w-4 h-4" /> Upload Edition
                                     </Button>
                                 )}
                             </div>
                             {isEditingNewsletter ? (
                                 <div className="animate-in slide-in-from-right-8 duration-500">
-                                    <button onClick={() => setIsEditingNewsletter(false)} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground/40 hover:text-primary mb-8 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Library</button>
+                                    <button onClick={() => setIsEditingNewsletter(false)} className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-widest text-foreground/40 hover:text-primary mb-8 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Library</button>
                                     <Card className="p-12 md:p-16 rounded-[3rem] shadow-xl bg-white space-y-12 border border-border/10">
                                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 font-black">
                                             <div className="space-y-8">
                                                 <div className="space-y-2 text-left">
-                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Newsletter Title</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Newsletter Title</label>
                                                     <input type="text" placeholder="EX: LMAI MONTHLY DIGEST - MARCH 2024" value={currentNewsletter?.title || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, title: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest" />
                                                 </div>
                                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
                                                     <div className="space-y-2">
-                                                        <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Release Date (Optional)</label>
+                                                        <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Release Date (Optional)</label>
                                                         <input type="text" placeholder="MARCH 1, 2024" value={currentNewsletter?.date || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, date: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest" />
                                                     </div>
                                                     <div className="space-y-2">
-                                                        <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Writer/Author (Optional)</label>
+                                                        <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Writer/Author (Optional)</label>
                                                         <input type="text" placeholder="EX: JOHN DOE" value={currentNewsletter?.writer || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, writer: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest" />
                                                     </div>
                                                 </div>
                                                 <div className="space-y-2 text-left">
-                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Category (Optional)</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Category (Optional)</label>
                                                     <select value={currentNewsletter?.category || 'Monthly Digest'} onChange={e => setCurrentNewsletter({ ...currentNewsletter, category: e.target.value })} className="w-full h-[52px] bg-gray-50 rounded-2xl px-6 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest appearance-none">
                                                         <option>Monthly Digest</option>
                                                         <option>Special Edition</option>
@@ -829,13 +819,13 @@ export default function Dashboard() {
                                                     </select>
                                                 </div>
                                                 <div className="space-y-2 text-left">
-                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Description (Optional)</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Description (Optional)</label>
                                                     <textarea rows={3} placeholder="SUMMARIZE THE CONTENT..." value={currentNewsletter?.description || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, description: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest resize-none" />
                                                 </div>
                                             </div>
                                             <div className="space-y-8">
                                                 <div className="space-y-4 text-left font-black">
-                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Edition PDF URL / File Link</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Edition PDF URL / File Link</label>
                                                     <div className="flex gap-4">
                                                         <div className="flex-grow">
                                                             <input type="text" placeholder="FILE PATH OR URL" value={currentNewsletter?.file || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, file: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest pr-12" />
@@ -845,7 +835,7 @@ export default function Dashboard() {
                                                     </div>
                                                 </div>
                                                 <div className="space-y-2 text-left">
-                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Custom Cover Image URL (Optional)</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Custom Cover Image URL (Optional)</label>
                                                     <input type="text" placeholder="EX: https://site.com/image.jpg" value={currentNewsletter?.image || ''} onChange={e => setCurrentNewsletter({ ...currentNewsletter, image: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest" />
                                                 </div>
                                             </div>
@@ -878,7 +868,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                             <div className="p-8 border-t border-gray-50 mt-auto">
-                                                <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-foreground/40">
+                                                <div className="flex items-center justify-between text-[13px] font-bold uppercase tracking-widest text-foreground/40">
                                                     <span>{nl.date}</span>
                                                     <span className="flex items-center gap-1"><Download className="w-3 h-3" /> {nl.fileSize}</span>
                                                 </div>
@@ -887,7 +877,7 @@ export default function Dashboard() {
                                     ))}
                                     <div onClick={() => { setIsEditingNewsletter(true); setCurrentNewsletter({ file: '', category: 'Monthly Digest' }); }} className="aspect-[4/5] rounded-[2.5rem] border-4 border-dashed border-foreground/5 bg-gray-50 flex flex-col items-center justify-center text-foreground/20 hover:border-primary hover:text-primary hover:bg-primary/5 transition-all cursor-pointer group">
                                         <FileUp className="w-12 h-12 mb-4 group-hover:-translate-y-2 transition-transform" />
-                                        <span className="text-[10px] font-black uppercase tracking-widest">Add Edition</span>
+                                        <span className="text-[13px] font-bold uppercase tracking-widest">Add Edition</span>
                                     </div>
                                 </div>
                             )}
@@ -899,14 +889,14 @@ export default function Dashboard() {
                             <div className="flex items-center justify-between mb-8">
                                 <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Keynote & Session Library</h3>
                                 {!isEditingPresentation && (
-                                    <Button onClick={() => { setIsEditingPresentation(true); setCurrentPresentation({ category: 'Keynote' }); }} className="rounded-full bg-primary text-white h-12 px-8 text-[10px] font-black uppercase tracking-widest flex items-center gap-2 group">
+                                    <Button onClick={() => { setIsEditingPresentation(true); setCurrentPresentation({ category: 'Keynote' }); }} className="rounded-full bg-primary text-white h-12 px-8 text-[13px] font-bold uppercase tracking-widest flex items-center gap-2 group">
                                         <Plus className="w-4 h-4 group-hover:rotate-90 transition-all" /> Add Session
                                     </Button>
                                 )}
                             </div>
                             {isEditingPresentation ? (
                                 <div className="animate-in slide-in-from-right-8 duration-500">
-                                    <button onClick={() => setIsEditingPresentation(false)} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground/40 hover:text-primary mb-8 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Library</button>
+                                    <button onClick={() => setIsEditingPresentation(false)} className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-widest text-foreground/40 hover:text-primary mb-8 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Library</button>
                                     <Card className="p-12 md:p-16 rounded-[3rem] shadow-xl bg-white space-y-12 border border-border/10">
                                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                                             <div className="space-y-8">
@@ -931,14 +921,14 @@ export default function Dashboard() {
                                             </div>
                                             <div className="space-y-8">
                                                 <div className="space-y-4 text-left font-black">
-                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">YouTube Link</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">YouTube Link</label>
                                                     <div className="relative">
                                                         <input type="text" placeholder="https://youtube.com/..." value={currentPresentation?.youtubeLink || ''} onChange={e => setCurrentPresentation({ ...currentPresentation, youtubeLink: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest pr-12" />
                                                         <ExternalLink className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/20" />
                                                     </div>
                                                 </div>
                                                 <div className="space-y-4 text-left font-black">
-                                                    <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/30">Custom Thumbnail (Optional)</label>
+                                                    <label className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Custom Thumbnail (Optional)</label>
                                                     <div className="flex gap-4">
                                                         <div className="flex-grow">
                                                             <input type="text" placeholder="IMAGE URL" value={currentPresentation?.thumbnail || ''} onChange={e => setCurrentPresentation({ ...currentPresentation, thumbnail: e.target.value })} className="w-full bg-gray-50 rounded-2xl px-6 py-4 outline-none border border-transparent focus:border-primary transition-all text-xs tracking-widest pr-12" />
@@ -975,7 +965,7 @@ export default function Dashboard() {
                                             </div>
                                             <div className="p-8 space-y-4">
                                                 <h4 className="text-lg font-black uppercase tracking-tighter leading-tight group-hover:text-primary transition-colors line-clamp-2">{pres.title}</h4>
-                                                <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-foreground/40">
+                                                <div className="flex items-center justify-between text-[13px] font-bold uppercase tracking-widest text-foreground/40">
                                                     <span>{pres.speaker}</span>
                                                     <span>{pres.date}</span>
                                                 </div>
@@ -984,7 +974,7 @@ export default function Dashboard() {
                                     ))}
                                     <div onClick={() => { setIsEditingPresentation(true); setCurrentPresentation({ category: 'Keynote' }); }} className="aspect-video rounded-[2.5rem] border-4 border-dashed border-foreground/5 bg-gray-50 flex flex-col items-center justify-center text-foreground/20 hover:border-primary hover:text-primary hover:bg-primary/5 transition-all cursor-pointer group">
                                         <Plus className="w-12 h-12 mb-2 group-hover:rotate-90 transition-transform" />
-                                        <span className="text-[10px] font-black uppercase tracking-widest">Add Session</span>
+                                        <span className="text-[13px] font-bold uppercase tracking-widest">Add Session</span>
                                     </div>
                                 </div>
                             )}
@@ -1002,7 +992,7 @@ export default function Dashboard() {
                                                 key={cat}
                                                 onClick={() => setManagementCategory(cat)}
                                                 className={cn(
-                                                    "px-6 py-2 rounded-full text-[8px] font-black uppercase tracking-widest transition-all",
+                                                    "px-6 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all",
                                                     managementCategory === cat ? "bg-white text-primary shadow-sm" : "text-foreground/40 hover:text-foreground"
                                                 )}
                                             >
@@ -1012,7 +1002,7 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                                 {!isEditingMember && (
-                                    <Button onClick={() => { setIsEditingMember(true); setCurrentMember(null); }} className="rounded-full bg-primary text-white h-12 px-8 text-[10px] font-black uppercase tracking-widest flex items-center gap-2 group">
+                                    <Button onClick={() => { setIsEditingMember(true); setCurrentMember(null); }} className="rounded-full bg-primary text-white h-12 px-8 text-[13px] font-bold uppercase tracking-widest flex items-center gap-2 group">
                                         <Plus className="w-4 h-4 group-hover:rotate-90 transition-all" /> Add Member
                                     </Button>
                                 )}
@@ -1020,7 +1010,7 @@ export default function Dashboard() {
 
                             {isEditingMember ? (
                                 <div className="animate-in slide-in-from-right-8 duration-500">
-                                    <button onClick={() => setIsEditingMember(false)} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground/40 hover:text-primary mb-8 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Roster</button>
+                                    <button onClick={() => setIsEditingMember(false)} className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-widest text-foreground/40 hover:text-primary mb-8 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Roster</button>
                                     <Card className="max-w-4xl mx-auto p-12 md:p-16 rounded-[3rem] shadow-xl bg-white space-y-12 border border-border/10">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                             <div className="space-y-6">
@@ -1050,7 +1040,7 @@ export default function Dashboard() {
                                                     ) : (
                                                         <div className="flex flex-col items-center justify-center h-full text-foreground/20">
                                                             <User className="w-12 h-12 mb-2" />
-                                                            <span className="text-[8px] font-black uppercase tracking-widest">No Image</span>
+                                                            <span className="text-[11px] font-bold uppercase tracking-widest">No Image</span>
                                                         </div>
                                                     )}
                                                 </div>
@@ -1080,13 +1070,13 @@ export default function Dashboard() {
                                             </div>
                                             <div className="space-y-2">
                                                 <h4 className="text-sm font-black uppercase tracking-tighter group-hover:text-primary transition-colors line-clamp-1">{member.name}</h4>
-                                                <p className="text-[8px] font-black uppercase tracking-[0.2em] text-foreground/40 line-clamp-1">{member.title}</p>
+                                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-foreground/40 line-clamp-1">{member.title}</p>
                                             </div>
                                         </Card>
                                     ))}
                                     <div onClick={() => { setIsEditingMember(true); setCurrentMember(null); }} className="aspect-[4/5] rounded-[2rem] border-4 border-dashed border-foreground/5 bg-gray-50 flex flex-col items-center justify-center text-foreground/20 hover:border-primary hover:text-primary hover:bg-primary/5 transition-all cursor-pointer group">
                                         <Plus className="w-10 h-10 mb-2 group-hover:rotate-90 transition-transform" />
-                                        <span className="text-[8px] font-black uppercase tracking-widest">Add Member</span>
+                                        <span className="text-[13px] font-bold uppercase tracking-widest">Add Member</span>
                                     </div>
                                 </div>
                             )}
@@ -1098,7 +1088,7 @@ export default function Dashboard() {
                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-8 text-left">
                                 <div className="space-y-1">
                                     <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Inquiry Response Center</h3>
-                                    <p className="text-[10px] font-black uppercase tracking-widest text-foreground/30">Managing website form submissions and leads</p>
+                                    <p className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Managing website form submissions and leads</p>
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <div className="relative">
@@ -1108,10 +1098,10 @@ export default function Dashboard() {
                                             placeholder="Search inquiries..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="bg-white border border-border/50 rounded-full px-12 py-3 outline-none focus:border-primary transition-all text-[10px] font-black uppercase tracking-widest w-64"
+                                            className="bg-white border border-border/50 rounded-full px-12 py-3 outline-none focus:border-primary transition-all text-[13px] font-bold uppercase tracking-widest w-64"
                                         />
                                     </div>
-                                    <Button variant="outline" className="rounded-full h-12 px-6 flex items-center gap-2 border-border/50 text-[10px] font-black uppercase tracking-widest">
+                                    <Button variant="outline" className="rounded-full h-12 px-6 flex items-center gap-2 border-border/50 text-[13px] font-bold uppercase tracking-widest">
                                         <Filter className="w-4 h-4" /> Filter
                                     </Button>
                                 </div>
@@ -1129,7 +1119,7 @@ export default function Dashboard() {
                                                     <div className="flex items-center gap-4">
                                                         <h4 className="text-lg font-black uppercase tracking-tighter">{enq.subject}</h4>
                                                         <span className={cn(
-                                                            "px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest",
+                                                            "px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest",
                                                             enq.status === 'Unread' ? "bg-red-100 text-red-500" :
                                                                 enq.status === 'In Discussion' ? "bg-blue-100 text-blue-500" :
                                                                     "bg-green-100 text-green-500"
@@ -1148,7 +1138,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-3 shrink-0">
-                                                <Button size="sm" variant="outline" className="rounded-full h-10 px-6 text-[8px] font-black uppercase tracking-widest bg-gray-50 border-none hover:bg-primary hover:text-white transition-all">Reply via Email</Button>
+                                                <Button size="sm" variant="outline" className="rounded-full h-10 px-6 text-[11px] font-bold uppercase tracking-widest bg-gray-50 border-none hover:bg-primary hover:text-white transition-all">Reply via Email</Button>
                                                 <button
                                                     onClick={() => genericSave('enquiries', { ...enq, status: 'Read' }, enq._id || enq.id)}
                                                     className="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-600 hover:text-white transition-all shadow-sm"
@@ -1174,7 +1164,7 @@ export default function Dashboard() {
                                         </div>
                                         <div>
                                             <h3 className="text-xl font-black uppercase tracking-tighter">No Inquiries Found</h3>
-                                            <p className="text-[10px] font-black uppercase tracking-widest text-foreground/20">Website submissions will appear here once received</p>
+                                            <p className="text-[13px] font-bold uppercase tracking-widest text-foreground/20">Website submissions will appear here once received</p>
                                         </div>
                                     </div>
                                 )}
@@ -1192,7 +1182,7 @@ export default function Dashboard() {
                                 <Shield className="w-24 h-24 text-primary opacity-20" />
                                 <div>
                                     <h3 className="text-2xl font-black uppercase tracking-tighter mb-2">System <span className="text-primary">Control Center</span></h3>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/30">Security and API keys management coming soon</p>
+                                    <p className="text-[13px] font-bold uppercase tracking-widest text-foreground/30">Security and API keys management coming soon</p>
                                 </div>
                             </Card>
                         </div>

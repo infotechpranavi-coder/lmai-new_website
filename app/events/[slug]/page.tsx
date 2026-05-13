@@ -50,7 +50,7 @@ export default async function EventDetail({ params }: { params: Promise<{ slug: 
                     <div className="flex items-center gap-2 text-primary text-[10px] sm:text-xs font-black uppercase tracking-[0.4em] mb-6 flex-wrap justify-center">
                         <Link href="/" className="hover:text-white transition-colors">Home</Link>
                         <span>/ /</span>
-                        <Link href="/events" className="hover:text-white transition-colors">Events</Link>
+                        <Link href="/events?view=gallery" className="hover:text-white transition-colors">Events</Link>
                         <span>/ /</span>
                         <span className="text-white">{event.title}</span>
                     </div>
@@ -65,19 +65,6 @@ export default async function EventDetail({ params }: { params: Promise<{ slug: 
                 </div>
             </section>
 
-            {/* ──────────────────────────────────────────────────────────
-          DESCRIPTION
-      ────────────────────────────────────────────────────────── */}
-            <section className="py-24 px-4 sm:px-6 lg:px-24">
-                <div className="max-w-4xl mx-auto text-center space-y-10">
-                    <h2 className="text-3xl md:text-5xl font-black text-foreground uppercase tracking-tighter leading-tight">
-                        Event <span className="text-primary italic">Overview</span>
-                    </h2>
-                    <p className="text-xl md:text-2xl font-bold text-foreground/60 leading-relaxed border-t border-border pt-10">
-                        {event.description}
-                    </p>
-                </div>
-            </section>
 
 
 
@@ -87,10 +74,13 @@ export default async function EventDetail({ params }: { params: Promise<{ slug: 
             {event.gallery && event.gallery.length > 0 && (
                 <section className="py-24 px-4 sm:px-6 lg:px-24 bg-[#0a0a0b] text-white">
                     <div className="max-w-7xl mx-auto">
-                        <div className="mb-20 text-center">
-                            <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em] block mb-4">Visual Records</span>
-                            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
-                                Event <span className="text-primary italic">Gallery</span>
+                        <div className="mb-20 text-left">
+                            <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em] block mb-4">
+                                Visual Records
+                            </span>
+                            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none flex justify-between items-baseline gap-4 w-full">
+                                <span>Event <span className="text-primary italic">Gallery</span></span>
+                                <span className="text-sm md:text-lg text-white/30 font-black uppercase tracking-[0.3em]">{event.date}</span>
                             </h2>
                         </div>
 
@@ -110,7 +100,7 @@ export default async function EventDetail({ params }: { params: Promise<{ slug: 
 
                         <div className="mt-24 text-center">
                             <Button variant="outline" asChild className="rounded-full bg-white border-none text-black hover:bg-primary hover:text-white font-bold uppercase tracking-widest text-xs h-14 px-10 shadow-lg">
-                                <Link href="/events">
+                                <Link href="/events?view=gallery">
                                     Back to All Events
                                 </Link>
                             </Button>
