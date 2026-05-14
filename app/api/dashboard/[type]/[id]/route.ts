@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import { Banner, Event, Award, Newsletter, Presentation, Member, Enquiry } from '@/lib/models';
+import { revalidatePath } from 'next/cache';
 
 const models: any = {
     banners: Banner,
@@ -32,6 +33,14 @@ export async function PATCH(
         }
 
         const updatedItem = await Model.findByIdAndUpdate(id, body, { new: true });
+
+        // Revalidate paths
+        revalidatePath('/');
+        revalidatePath(`/${type === 'members' ? 'management' : type}`);
+        if (type === 'events' || type === 'awards') {
+            revalidatePath(`/${type}/${id}`);
+        }
+
         return NextResponse.json(updatedItem);
     } catch (error: any) {
         console.error(`PATCH Error [${type}]:`, error);
@@ -53,6 +62,11 @@ export async function DELETE(
         if (!Model) return NextResponse.json({ error: 'Invalid type' }, { status: 400 });
 
         await Model.findByIdAndDelete(id);
+
+        // Revalidate paths
+        revalidatePath('/');
+        revalidatePath(`/${type === 'members' ? 'management' : type}`);
+        
         return NextResponse.json({ success: true });
     } catch (error: any) {
         console.error(`DELETE Error [${type}]:`, error);
@@ -62,3 +76,4 @@ export async function DELETE(
         }, { status: 500 });
     }
 }
+

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import { Banner, Event, Award, Newsletter, Presentation, Member, Enquiry } from '@/lib/models';
+import { revalidatePath } from 'next/cache';
 
 const models: any = {
     banners: Banner,
@@ -59,6 +60,11 @@ export async function POST(
         }
 
         const newItem = await Model.create(body);
+
+        // Revalidate the entire site or specific paths to reflect new data
+        revalidatePath('/');
+        revalidatePath(`/${type === 'members' ? 'management' : type}`);
+        
         return NextResponse.json(newItem);
     } catch (error: any) {
         console.error(`POST Error [${type}]:`, error);
@@ -68,3 +74,4 @@ export async function POST(
         }, { status: 500 });
     }
 }
+
