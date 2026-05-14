@@ -34,23 +34,37 @@ export async function POST(
     req: NextRequest,
     { params }: { params: Promise<{ type: string }> }
 ) {
+    const { type } = await params;
     try {
-        const { type } = await params;
         await dbConnect();
         const Model = models[type];
         if (!Model) return NextResponse.json({ error: 'Invalid type' }, { status: 400 });
 
         const body = await req.json();
 
-        // Workaround: Apply default space for title/subtitle if empty to bypass cached Mongoose validation
+        // Ensure defaults for critical fields to bypass Mongoose strictness in some environments
         if (type === 'banners') {
-            if (!body.title) body.title = ' ';
-            if (!body.subtitle) body.subtitle = ' ';
+            body.title = body.title || ' ';
+            body.subtitle = body.subtitle || ' ';
+        } else if (type === 'events') {
+            body.title = body.title || 'New Event';
+            body.date = body.date || new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            body.coverImage = body.coverImage || '';
+            body.description = body.description || 'Official LMAI Event Update';
+        } else if (type === 'awards') {
+            body.title = body.title || '';
+            body.category = body.category || '';
+            body.image = body.image || '';
+            body.description = body.description || 'Official LMAI Award Recognition';
         }
 
         const newItem = await Model.create(body);
         return NextResponse.json(newItem);
-    } catch (error) {
-        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    } catch (error: any) {
+        console.error(`POST Error [${type}]:`, error);
+        return NextResponse.json({ 
+            error: 'Internal server error', 
+            details: error.message || 'Unknown error' 
+        }, { status: 500 });
     }
 }

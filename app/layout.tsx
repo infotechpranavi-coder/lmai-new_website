@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   generator: 'v0.app',
 }
 
+import { Toaster } from 'sonner'
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,7 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
+      </head>
       <body className="font-sans antialiased flex flex-col min-h-screen">
+        <Toaster position="top-right" richColors />
         <Header />
         <main className="flex-1">
           {children}

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const AUTOPLAY_INTERVAL = 4500;
+const AUTOPLAY_INTERVAL = 2000;
 
 export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] }) {
   const [slides, setSlides] = useState<any[]>(initialSlides || []);
@@ -67,7 +67,7 @@ export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] 
     setTimeout(() => {
       setCurrent(index);
       setAnimating(false);
-    }, 600);
+    }, 250);
   }, [animating, slides.length]);
 
   const goNext = useCallback(() => {
@@ -94,7 +94,7 @@ export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] 
       setCurrent((c) => {
         setDirection('next');
         setAnimating(true);
-        setTimeout(() => setAnimating(false), 600);
+        setTimeout(() => setAnimating(false), 250);
         setProgress(0);
         return (c + 1) % slides.length;
       });
@@ -129,7 +129,7 @@ export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] 
         <div
           key={s.id}
           className={[
-            'absolute inset-0 transition-all duration-700 ease-in-out',
+            'absolute inset-0 transition-all duration-300 ease-in-out',
             i === current ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0',
           ].join(' ')}
         >
@@ -158,7 +158,7 @@ export default function HeroCarousel({ initialSlides }: { initialSlides?: any[] 
             <div
               key={current}
               className={[
-                'transition-all duration-700',
+                'transition-all duration-300 ease-out',
                 animating
                   ? direction === 'next'
                     ? 'opacity-0 translate-y-6'

@@ -65,9 +65,11 @@ function EventsGalleryContent({ pastEvents }: { pastEvents: any[] }) {
                     {pastEvents.map((photo, idx) => (
                         <Link href={`/events/${photo._id}`} key={photo._id?.toString() || idx} className="relative aspect-[4/5] rounded-[2rem] overflow-hidden group cursor-pointer block border border-black/5 shadow-lg shadow-black/5">
                             <Image
-                                src={getOptimizedUrl(photo.coverImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865', { width: 500 })}
+                                src={getOptimizedUrl(photo.coverImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865', { width: 600 })}
                                 alt={photo.title}
                                 fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                loading={idx < 6 ? "eager" : "lazy"}
                                 className="object-cover group-hover:scale-110 group-hover:blur-[2px] transition-all duration-700 grayscale-0"
                             />
                             <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
@@ -86,9 +88,11 @@ function EventsGalleryContent({ pastEvents }: { pastEvents: any[] }) {
                         {[...pastEvents, ...pastEvents].map((photo, idx) => (
                             <Link href={`/events/${photo._id}`} key={`${photo._id}-${idx}`} className="relative w-[300px] md:w-[400px] aspect-[4/5] flex-shrink-0 rounded-[2rem] overflow-hidden group cursor-pointer block border border-black/5 shadow-lg shadow-black/5">
                                 <Image
-                                    src={getOptimizedUrl(photo.coverImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865', { width: 600 })}
+                                    src={getOptimizedUrl(photo.coverImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865', { width: 800 })}
                                     alt={photo.title}
                                     fill
+                                    sizes="(max-width: 768px) 300px, 400px"
+                                    loading={idx < 4 ? "eager" : "lazy"}
                                     className="object-cover group-hover:scale-110 group-hover:blur-[2px] transition-all duration-700 grayscale-0"
                                 />
                                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />

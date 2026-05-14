@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import dbConnect from '@/lib/mongodb';
 import { Event } from '@/lib/models';
+import { getOptimizedUrl } from '@/lib/image-utils';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
@@ -40,7 +41,7 @@ export default async function EventDetail({ params }: { params: Promise<{ slug: 
       ────────────────────────────────────────────────────────── */}
             <section className="relative h-[400px] md:h-[500px] w-full overflow-hidden">
                 <Image
-                    src={event.coverImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&q=80'}
+                    src={getOptimizedUrl(event.coverImage || 'https://images.unsplash.com/photo-1511578314322-379afb476865', { width: 1600 })}
                     alt={event.title}
                     fill
                     priority
@@ -88,9 +89,11 @@ export default async function EventDetail({ params }: { params: Promise<{ slug: 
                             {event.gallery.map((photo: string, idx: number) => (
                                 <div key={idx} className="relative aspect-video rounded-[2rem] overflow-hidden group">
                                     <Image
-                                        src={photo}
+                                        src={getOptimizedUrl(photo, { width: 800 })}
                                         alt={`${event.title} photo ${idx + 1}`}
                                         fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        loading={idx < 3 ? "eager" : "lazy"}
                                         className="object-cover group-hover:scale-110 transition-transform duration-700"
                                     />
                                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />

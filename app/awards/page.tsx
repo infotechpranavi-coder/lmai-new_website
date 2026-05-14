@@ -71,6 +71,8 @@ export default async function Awards() {
                         src={getOptimizedUrl(award.image || 'https://images.unsplash.com/photo-1579546678183-a84ee63a2aa0', { width: 600 })}
                         alt={award.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        loading={idx < 6 ? "eager" : "lazy"}
                         className="object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />

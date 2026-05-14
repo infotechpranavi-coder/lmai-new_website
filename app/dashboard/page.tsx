@@ -150,8 +150,10 @@ export default function Dashboard() {
         if (userId === 'admin' && password === 'admin123') {
             setIsLoggedIn(true);
             setError('');
+            toast.success("Welcome back, Admin!");
         } else {
             setError('Invalid credentials. Please try again.');
+            toast.error("Access denied. Check credentials.");
         }
     };
 
@@ -180,7 +182,7 @@ export default function Dashboard() {
             const data = await res.json();
             if (data.url) {
                 callback(data.url);
-                toast.success("Image uploaded successfully");
+                toast.success("File uploaded successfully");
             } else {
                 toast.error("Upload failed");
             }
@@ -217,7 +219,7 @@ export default function Dashboard() {
                 ...currentEvent,
                 gallery: [...(currentEvent.gallery || []), ...newUrls.filter(u => u)]
             });
-            toast.success(`${newUrls.length} images added to gallery`);
+            toast.success(`${newUrls.filter(u => u).length} images added to gallery`);
         } catch (err) {
             toast.error("Gallery upload failed");
         } finally {
@@ -236,7 +238,8 @@ export default function Dashboard() {
                 body: JSON.stringify(data),
             });
             if (res.ok) {
-                toast.success(`${type.slice(0, -1)} saved successfully`);
+                const action = id ? 'updated' : 'created';
+                toast.success(`${type.slice(0, -1)} ${action} successfully`);
                 fetchAllData();
                 return true;
             }
@@ -255,7 +258,7 @@ export default function Dashboard() {
         try {
             const res = await fetch(`/api/dashboard/${type}/${id}`, { method: 'DELETE' });
             if (res.ok) {
-                toast.success('Item removed');
+                toast.success(`${type.slice(0, -1)} deleted successfully`);
                 fetchAllData();
             } else {
                 throw new Error();
@@ -313,7 +316,7 @@ export default function Dashboard() {
                             </div>
                         </div>
                         {error && <p className="text-red-500 text-[13px] font-bold uppercase tracking-widest text-center animate-pulse">{error}</p>}
-                        <Button type="submit" className="w-full h-16 rounded-full bg-white text-black hover:bg-primary hover:text-white font-black uppercase text-xs tracking-[0.3em] transition-all duration-500 flex items-center justify-between px-10 group shadow-xl">
+                        <Button type="submit" className="w-full h-16 rounded-full bg-white text-black hover:bg-primary hover:text-white font-black uppercase text-[13px] tracking-[0.3em] transition-all duration-500 flex items-center justify-between px-10 group shadow-xl">
                             Enter Dashboard <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                         </Button>
                     </form>
@@ -340,7 +343,7 @@ export default function Dashboard() {
                             { id: 'overview', name: 'Overview', icon: LayoutDashboard },
                             { id: 'banners', name: 'Banners', icon: ImagePlus },
                             { id: 'events', name: 'Manage Events', icon: Calendar },
-                            { id: 'awards', name: 'Awards Archive', icon: Trophy },
+                            { id: 'awards', name: 'Awards', icon: Trophy },
                             { id: 'newsletters', name: 'Newsletters', icon: Newspaper },
                             { id: 'presentations', name: 'Presentations', icon: Video },
                             { id: 'members', name: 'Member List', icon: Users },
@@ -468,7 +471,7 @@ export default function Dashboard() {
                                                     setIsAddingBanner(false);
                                                     setBannerForm({ title: '', subtitle: '', image: '', method: 'link' });
                                                 }
-                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-[13px] tracking-widest uppercase shadow-lg shadow-primary/20">Install Banner</Button>
+                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-[13px] tracking-widest uppercase shadow-lg shadow-primary/20">Save</Button>
                                         </div>
                                     </Card>
                                 </div>
@@ -580,7 +583,10 @@ export default function Dashboard() {
                                                         {currentEvent?.gallery?.map((img: string, idx: number) => (
                                                             <div key={idx} className="aspect-square rounded-xl overflow-hidden relative group">
                                                                 <Image src={img} alt="gal" fill className="object-cover" />
-                                                                <button onClick={() => setCurrentEvent({ ...currentEvent, gallery: currentEvent.gallery.filter((_: any, i: number) => i !== idx) })} className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><Trash2 className="w-4 h-4" /></button>
+                                                                <button onClick={() => {
+                                                                    setCurrentEvent({ ...currentEvent, gallery: currentEvent.gallery.filter((_: any, i: number) => i !== idx) });
+                                                                    toast.info("Image removed from gallery");
+                                                                }} className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><Trash2 className="w-4 h-4" /></button>
                                                             </div>
                                                         ))}
                                                         <button onClick={() => galleryInputRef.current?.click()} className="aspect-square rounded-xl border-2 border-dashed border-foreground/10 flex flex-col items-center justify-center text-foreground/20 hover:border-primary hover:text-primary transition-all bg-gray-50">
@@ -593,11 +599,11 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="flex justify-end gap-4 pt-8 border-t border-gray-100 font-black">
-                                            <Button onClick={() => setIsEditingEvent(false)} variant="outline" className="rounded-full h-12 px-10 text-xs tracking-widest border-2 uppercase">Discard Changes</Button>
+                                            <Button onClick={() => setIsEditingEvent(false)} variant="outline" className="rounded-full h-12 px-10 text-[13px] tracking-widest border-2 uppercase">Discard Changes</Button>
                                             <Button onClick={async () => {
                                                 const success = await genericSave('events', { ...currentEvent, type: eventCategory }, currentEvent._id || currentEvent.id);
                                                 if (success) setIsEditingEvent(false);
-                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-xs tracking-widest uppercase shadow-lg shadow-primary/20">Push to Archive</Button>
+                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-[13px] tracking-widest uppercase shadow-lg shadow-primary/20">Save</Button>
                                         </div>
                                     </Card>
                                 </div>
@@ -635,7 +641,7 @@ export default function Dashboard() {
                     {activeTab === 'awards' && (
                         <div className="space-y-12">
                             <div className="flex items-center justify-between mb-8">
-                                <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Award Archive</h3>
+                                <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Manage Awards</h3>
                                 {!isEditingAward && (
                                     <Button onClick={() => { setIsEditingAward(true); setCurrentAward({ gallery: [] }); }} className="rounded-full bg-primary text-white h-12 px-8 text-[13px] font-bold uppercase tracking-widest flex items-center gap-2 group">
                                         <Plus className="w-4 h-4 group-hover:rotate-90 transition-all" /> Add New Award
@@ -697,7 +703,10 @@ export default function Dashboard() {
                                                         {currentAward?.gallery?.map((img: string, idx: number) => (
                                                             <div key={idx} className="aspect-square rounded-xl overflow-hidden relative group">
                                                                 <Image src={img} alt="gal" fill className="object-cover" />
-                                                                <button onClick={() => setCurrentAward({ ...currentAward, gallery: currentAward.gallery.filter((_: any, i: number) => i !== idx) })} className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><Trash2 className="w-4 h-4" /></button>
+                                                                <button onClick={() => {
+                                                                    setCurrentAward({ ...currentAward, gallery: currentAward.gallery.filter((_: any, i: number) => i !== idx) });
+                                                                    toast.info("Image removed from gallery");
+                                                                }} className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><Trash2 className="w-4 h-4" /></button>
                                                             </div>
                                                         ))}
                                                         <button onClick={() => galleryInputRef.current?.click()} className="aspect-square rounded-xl border-2 border-dashed border-foreground/10 flex flex-col items-center justify-center text-foreground/20 hover:border-primary hover:text-primary transition-all bg-gray-50">
@@ -729,7 +738,7 @@ export default function Dashboard() {
                                                                     ...currentAward,
                                                                     gallery: [...(currentAward.gallery || []), ...newUrls.filter(u => u)]
                                                                 });
-                                                                toast.success(`${newUrls.length} images added to gallery`);
+                                                                toast.success(`${newUrls.filter(u => u).length} images added to gallery`);
                                                             } catch (err) {
                                                                 toast.error("Gallery upload failed");
                                                             } finally {
@@ -741,11 +750,11 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="flex justify-end gap-4 pt-8 border-t border-gray-100 font-black">
-                                            <Button onClick={() => setIsEditingAward(false)} variant="outline" className="rounded-full h-12 px-10 text-xs tracking-widest border-2 uppercase">Discard</Button>
+                                            <Button onClick={() => setIsEditingAward(false)} variant="outline" className="rounded-full h-12 px-10 text-[13px] tracking-widest border-2 uppercase">Discard</Button>
                                             <Button onClick={async () => {
                                                 const success = await genericSave('awards', currentAward, currentAward._id || currentAward.id);
                                                 if (success) setIsEditingAward(false);
-                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-xs tracking-widest uppercase shadow-xl shadow-primary/20">Publish Award</Button>
+                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-[13px] tracking-widest uppercase shadow-xl shadow-primary/20">Save</Button>
                                         </div>
                                     </Card>
                                 </div>
@@ -841,11 +850,11 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="flex justify-end gap-4 pt-8 border-t border-gray-100 font-black">
-                                            <Button onClick={() => setIsEditingNewsletter(false)} variant="outline" className="rounded-full h-12 px-10 text-xs tracking-widest border-2 uppercase">Cancel</Button>
+                                            <Button onClick={() => setIsEditingNewsletter(false)} variant="outline" className="rounded-full h-12 px-10 text-[13px] tracking-widest border-2 uppercase">Cancel</Button>
                                             <Button onClick={async () => {
                                                 const success = await genericSave('newsletters', currentNewsletter, currentNewsletter._id || currentNewsletter.id);
                                                 if (success) setIsEditingNewsletter(false);
-                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-xs tracking-widest uppercase shadow-xl shadow-primary/20">Distribute Edition</Button>
+                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-[13px] tracking-widest uppercase shadow-xl shadow-primary/20">Save</Button>
                                         </div>
                                     </Card>
                                 </div>
@@ -939,11 +948,11 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="flex justify-end gap-4 pt-8 border-t border-gray-100 font-black">
-                                            <Button onClick={() => setIsEditingPresentation(false)} variant="outline" className="rounded-full h-12 px-10 text-xs tracking-widest border-2 uppercase">Discard</Button>
+                                            <Button onClick={() => setIsEditingPresentation(false)} variant="outline" className="rounded-full h-12 px-10 text-[13px] tracking-widest border-2 uppercase">Discard</Button>
                                             <Button onClick={async () => {
                                                 const success = await genericSave('presentations', currentPresentation, currentPresentation._id || currentPresentation.id);
                                                 if (success) setIsEditingPresentation(false);
-                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-xs tracking-widest uppercase shadow-xl shadow-primary/20">Save Session</Button>
+                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-[13px] tracking-widest uppercase shadow-xl shadow-primary/20">Save</Button>
                                         </div>
                                     </Card>
                                 </div>
@@ -1047,11 +1056,11 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="flex justify-end gap-4 pt-8 border-t border-gray-100 font-black">
-                                            <Button onClick={() => setIsEditingMember(false)} variant="outline" className="rounded-full h-12 px-10 text-xs tracking-widest border-2 uppercase">Cancel</Button>
+                                            <Button onClick={() => setIsEditingMember(false)} variant="outline" className="rounded-full h-12 px-10 text-[13px] tracking-widest border-2 uppercase">Cancel</Button>
                                             <Button onClick={async () => {
                                                 const success = await genericSave('members', { ...currentMember, category: managementCategory }, currentMember?._id || currentMember?.id);
                                                 if (success) setIsEditingMember(false);
-                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-xs tracking-widest uppercase shadow-xl shadow-primary/20">Confirm Member</Button>
+                                            }} className="rounded-full h-12 px-12 bg-primary text-white text-[13px] tracking-widest uppercase shadow-xl shadow-primary/20">Save</Button>
                                         </div>
                                     </Card>
                                 </div>
@@ -1138,7 +1147,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-3 shrink-0">
-                                                <Button size="sm" variant="outline" className="rounded-full h-10 px-6 text-[11px] font-bold uppercase tracking-widest bg-gray-50 border-none hover:bg-primary hover:text-white transition-all">Reply via Email</Button>
+                                                <Button size="sm" variant="outline" className="rounded-full h-10 px-6 text-[13px] font-bold uppercase tracking-widest bg-gray-50 border-none hover:bg-primary hover:text-white transition-all">Reply via Email</Button>
                                                 <button
                                                     onClick={() => genericSave('enquiries', { ...enq, status: 'Read' }, enq._id || enq.id)}
                                                     className="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-600 hover:text-white transition-all shadow-sm"
