@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: 'LMAI - Label Manufacturers Association of India',
   description: 'The official institutional archive and hub for the Indian label manufacturing industry.',
   generator: 'v0.app',
+  icons: {
+    icon: '/icon.png',
+  },
 }
 
 import { Toaster } from 'sonner'
