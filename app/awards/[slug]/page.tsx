@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import dbConnect from '@/lib/mongodb';
 import { Award } from '@/lib/models';
+import AwardGallery from '@/components/AwardGallery';
 import { getOptimizedUrl } from '@/lib/image-utils';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -82,21 +83,11 @@ export default async function AwardDetail({ params }: { params: Promise<{ slug: 
                             </h2>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {award.gallery.map((photo: string, idx: number) => (
-                                <div key={idx} className="relative aspect-video rounded-[2rem] overflow-hidden group">
-                                    <Image
-                                        src={getOptimizedUrl(photo, { width: 800 })}
-                                        alt={`${award.title} photo ${idx + 1}`}
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        loading={idx < 3 ? "eager" : "lazy"}
-                                        className="object-cover group-hover:scale-110 transition-transform duration-700"
-                                    />
-                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                                </div>
-                            ))}
-                        </div>
+                        <AwardGallery 
+                            images={award.gallery} 
+                            awardTitle={award.title} 
+                            awardCategory={award.category} 
+                        />
 
                         <div className="mt-24 text-center">
                             <Button variant="outline" asChild className="rounded-full bg-white border-none text-black hover:bg-primary hover:text-white font-bold uppercase tracking-widest text-xs h-14 px-10 shadow-lg">
