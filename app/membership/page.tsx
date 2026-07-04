@@ -182,7 +182,7 @@ export default async function Membership() {
               className="h-16 w-full max-w-xl rounded-full bg-primary text-white font-black uppercase text-xs tracking-[0.3em] transition-all duration-500 hover:bg-white hover:text-black hover:-translate-y-1 shadow-xl hover:shadow-primary/40 flex items-center gap-4 group/btn border-2 border-transparent hover:border-white"
               asChild
             >
-              <a href="/forms/membership-enrollment.pdf" download>
+              <a href="/Membership%20Application%20Form.pdf" download="Membership Application Form.pdf">
                 Download Membership Form
                 <Download className="w-5 h-5 group-hover/btn:translate-y-1 transition-transform" />
               </a>
